@@ -1,9 +1,19 @@
-# CS4300 - Flask Template
-This Flask app template is intended to get you started with your project and launch it on Heroku, and assumes no prior experience with web development (but some patience).
+# CS4300 Spring 2021 - Club Hub 
+## Contributors
+Cora Wu (cjw322)
+Jonathan Gao (jg992)
+Josiah Kek (jrk322)
+Rishabh Sarup (rs868)
+Samuel Lye (sl2982)
 
-**We recommend you start with the quick start guide FIRST and then read the Flask Template Walk-through section.** Some may find the additional information about AWS and KUBERNETES deployment to be useful, but those are not vital to getting your project working.
+This application is build with Flask/Postgres as our backend and React as our frontend.
 
-If you have any questions, do not hesitate to ask the TAs or come to OH. In this README, we will include an overview section with information on the flask app architecture and a step-by-step guide to loading up your app in dev and production (in Heroku) with instructions for (optional) EC2/EB add-ons coming soon. This README was originally written by Ilan Filonenko with help from Joseph Antonakakis.
+## Running the app
+
+```bash
+cd client && npm run build
+python3 app.py
+```
 
 ## Table of Contents
 ### [Quick Start Guide](#quickstart-guide)
@@ -12,6 +22,10 @@ If you have any questions, do not hesitate to ask the TAs or come to OH. In this
 ### [AWS Deployment](#deploy-to-ec2-quick)
 
 ## Quickstart Guide
+
+**We recommend you start with the quick start guide FIRST and then read the Flask Template Walk-through section.** Some may find the additional information about AWS and KUBERNETES deployment to be useful, but those are not vital to getting your project working.
+
+If you have any questions, do not hesitate to ask the TAs or come to OH. In this README, we will include an overview section with information on the flask app architecture and a step-by-step guide to loading up your app in dev and production (in Heroku) with instructions for (optional) EC2/EB add-ons coming soon. This README was originally written by Ilan Filonenko with help from Joseph Antonakakis.
 ### 1. Cloning the repository from Git
 ```bash
 git clone https://github.com/CornellNLP/CS4300_Flask_template.git
