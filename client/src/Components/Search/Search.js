@@ -2,15 +2,24 @@ import React, { useState, useEffect } from 'react';
 import { Button } from 'react-bootstrap';
 import axios from 'axios';
 import './search.css';
+import env from 'react-dotenv';
+
+const searchAPI =
+  env.NODE_ENV === 'production'
+    ? env.SEARCH_API_PRODUCTION
+    : env.SEARCH_API_DEV;
 
 const Search = () => {
   const [data, setData] = useState({ project_name: '', net_id: '' });
 
-  useEffect(async () => {
-    const result = await axios('http://localhost:5000/milestone1');
+  useEffect(() => {
+    async function fectchData() {
+      const result = await axios(searchAPI);
+      setData(result.data);
+    }
 
-    setData(result.data);
-  }, {});
+    fectchData();
+  }, []);
 
   return (
     <>
