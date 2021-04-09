@@ -5,10 +5,10 @@ import './search.css';
 import env from 'react-dotenv';
 
 const searchAPI =
-  env.NODE_ENV === 'production'
+  process.env.NODE_ENV === 'production'
     ? env.SEARCH_API_PRODUCTION
     : env.SEARCH_API_DEV;
-console.log(searchAPI);
+
 const Search = () => {
   const [data, setData] = useState({ project_name: '', net_id: '' });
 
