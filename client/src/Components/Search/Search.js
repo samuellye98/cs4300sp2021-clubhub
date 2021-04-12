@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from 'react-bootstrap';
 import axios from 'axios';
-import './search.css';
 import env from 'react-dotenv';
+import AutoTag from '../AutoTag/AutoTag';
+import PopcornLoading from '../PopcornLoading/PopcornLoading';
+import suggestionsJson from '../../suggestions.json';
+import './search.css';
 
 const searchAPI =
   process.env.NODE_ENV === 'production'
@@ -11,6 +14,7 @@ const searchAPI =
 
 const Search = () => {
   const [data, setData] = useState({ project_name: '', net_id: '' });
+  const [tags, setTags] = useState([]);
 
   useEffect(() => {
     async function fectchData() {
@@ -21,43 +25,41 @@ const Search = () => {
     fectchData();
   }, []);
 
+  const onDelete = (i) => {
+    const newTags = tags.slice(0);
+    newTags.splice(i, 1);
+    setTags(newTags);
+  };
+
+  const onAddition = (tag) => {
+    setTags([...tags, tag]);
+  };
+
+  const updateWeight = (i, weight) => {
+    const newTags = tags.slice(0);
+    newTags[i].weight = weight;
+    setTags(newTags);
+  };
+
   return (
-    <>
-      <div className="topcorner">
-        <p>Project Name: {data.project_name}</p>
-        <p>Student Name: {data.net_id}</p>
+    <section id="search">
+      <div className="search-hero-image">
+        <div className="hero-content">
+          <div className="search-title">
+            <span>What are you looking for?</span>
+          </div>
+          <AutoTag
+            tags={tags}
+            suggestions={suggestionsJson['suggestions']}
+            onDelete={onDelete}
+            onAddition={onAddition}
+            updateWeight={updateWeight}
+          />
+        </div>
       </div>
 
-      <form
-        className="form-inline global-search"
-        style={{ display: 'flex', flexDirection: 'column' }}
-      >
-        <h1
-          style={{ fontSize: '55px', fontFamily: 'Futura', color: '#4285f4' }}
-        >
-          C<span style={{ color: '#ea4335' }}>S</span>
-          <span style={{ color: '#fbbc05' }}>4</span>3
-          <span style={{ color: '#34a853' }}>0</span>
-          <span style={{ color: '#ea4335' }}>0</span>
-        </h1>
-
-        <br />
-        <br />
-
-        <div className="form-group">
-          <input
-            id="input"
-            type="text"
-            name="search"
-            className="form-control"
-            placeholder="Your Input"
-          />
-          <Button style={{ marginLeft: '5px' }} className="btn btn-info">
-            Go!
-          </Button>
-        </div>
-      </form>
-    </>
+      <PopcornLoading />
+    </section>
   );
 };
 
