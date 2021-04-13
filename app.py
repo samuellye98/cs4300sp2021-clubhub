@@ -30,9 +30,9 @@ app.register_blueprint(api)
 socketio.init_app(app)
 
 # HTTP error handling
-# @app.errorhandler(404)
-# def not_found(error):
-#     return render_template("404.html"), 404
+@app.errorhandler(404)
+def not_found(error):
+    return render_template("404.html"), 404
 
 @app.route('/')
 def root():
@@ -45,6 +45,6 @@ def milestone1():
 
 
 if __name__ == "__main__":
-  print("Flask app running at http://0.0.0.0:5000")
-  socketio.run(app, host="0.0.0.0", port=5000)
+    print("Flask app running at http://0.0.0.0:5000")
+    socketio.run(app, host="0.0.0.0", port=5000, debug=True)
 
