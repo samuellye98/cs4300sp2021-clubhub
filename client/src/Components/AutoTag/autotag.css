@@ -154,8 +154,12 @@
   text-align: right;
 }
 
-input[type='number']::-webkit-inner-spin-button,
-input[type='number']::-webkit-outer-spin-button {
+.weight-input[type='number']::-webkit-inner-spin-button,
+.weight-input[type='number']::-webkit-outer-spin-button {
   margin-left: 5px;
   opacity: 1;
+}
+
+.weight-input:focus {
+  outline: none;
 }

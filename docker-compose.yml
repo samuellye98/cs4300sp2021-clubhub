@@ -1,0 +1,21 @@
+services:
+  frontend:
+    build:
+      context: client
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    volumes:
+      - ./client:/app
+      - '/app/node_modules'
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '5000:5000'
+    volumes:
+      - .:/service
+    environment:
+      - APP_SETTINGS=config.ProductionConfig
+      - DATABASE_URL=postgresql://localhost/my_app_db
