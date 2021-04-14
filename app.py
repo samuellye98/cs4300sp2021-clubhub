@@ -13,7 +13,7 @@ monkey.patch_all()
 # Configure app
 socketio = SocketIO()
 app = Flask(__name__,
-            static_url_path='/',
+            static_url_path='',
             static_folder='client/build')
 CORS(app)
 app.config.from_object(os.environ["APP_SETTINGS"])
