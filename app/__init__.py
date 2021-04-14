@@ -36,6 +36,7 @@ socketio.init_app(app)
 
 @app.route('/')
 def root():
+    time.sleep(3)
     return app.send_static_file('index.html')
 
 
