@@ -60,8 +60,8 @@ const Search = () => {
     axios
       .post(postAPI, JSON.stringify({ data: tags }), {
         headers: {
-          // Overwrite Axios's automatically set Content-Type
           'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
         },
       })
       .then((res) => {
