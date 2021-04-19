@@ -56,7 +56,6 @@ const Search = () => {
   };
 
   const handleSubmit = () => {
-    console.log(tags);
     setLoading(true);
     axios
       .post(postAPI, JSON.stringify({ data: tags }), {

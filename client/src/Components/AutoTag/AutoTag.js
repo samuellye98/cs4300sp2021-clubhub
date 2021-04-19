@@ -67,8 +67,6 @@ const AutoTag = (props) => {
         event.preventDefault();
       }
 
-      // TO FIX
-      console.log('OPTIONS', options, index);
       if (options.length > 0 && !options[index].hasOwnProperty('disabled')) {
         addTag(options[index]);
       }
