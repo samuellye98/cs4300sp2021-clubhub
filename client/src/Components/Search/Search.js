@@ -93,9 +93,11 @@ const Search = () => {
       </div>
 
       {loading ? <PopcornLoading /> : null}
-      {movies.length > 0
-        ? movies.map((m, i) => <MovieResult key={i} movie={m} />)
-        : null}
+      <section id="results">
+        {movies.length > 0
+          ? movies.map((m, i) => <MovieResult key={i} movie={m} />)
+          : null}
+      </section>
     </section>
   );
 };

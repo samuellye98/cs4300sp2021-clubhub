@@ -114,7 +114,6 @@ def index_search(query, index=inv_idx, idf=idf, doc_norms=doc_norms, tokenizer=T
         queryUrl = 'https://api.themoviedb.org/3/tv/' + str(
             showId) + '?api_key=06f6526774c6bdba14bded4a2244fe36&language=en-US'
         resp = requests.get(queryUrl)
-        print('abc', resp)
         res = resp.json()
         showItem = {}
         showItem['id'] = showId

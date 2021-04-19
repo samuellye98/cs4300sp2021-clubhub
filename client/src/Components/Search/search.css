@@ -31,3 +31,9 @@
   font-size: 36px;
   margin-bottom: 60px;
 } */
+
+#results {
+  padding: 2% 0;
+  text-align: center;
+  /* background-color:rgb(25, 29, 61); */
+}
