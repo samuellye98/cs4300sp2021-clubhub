@@ -9,21 +9,18 @@ import pickle
 import json
 import math
 import requests
-# from flask_cors import CORS, cross_origin
+from flask_cors import CORS, cross_origin
 from flask_socketio import SocketIO
 from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, render_template, jsonify, request, g
 import os
-
-
-# Imports
 
 # Configure app
 socketio = SocketIO()
 app = Flask(__name__,
             static_url_path='',
             static_folder='client/build')
-# CORS(app)
+CORS(app)
 app.config.from_object(os.environ["APP_SETTINGS"])
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 app.config['CORS_HEADERS'] = 'Content-Type'
@@ -63,7 +60,7 @@ def milestone1():
 
 
 @app.route('/getMovies', methods=['POST'])
-# @cross_origin()
+@cross_origin()
 def getMovies():
     clubs = request.json['data']
     query = ' '.join([club_to_desc[c['name']] for c in clubs])
