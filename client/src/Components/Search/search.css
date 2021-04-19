@@ -35,5 +35,9 @@
 #results {
   padding: 2% 0;
   text-align: center;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  flex-wrap: wrap;
   /* background-color:rgb(25, 29, 61); */
 }

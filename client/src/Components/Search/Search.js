@@ -56,7 +56,6 @@ const Search = () => {
   };
 
   const handleSubmit = () => {
-    console.log(tags);
     setLoading(true);
     axios
       .post(postAPI, JSON.stringify({ data: tags }), {
@@ -93,11 +92,13 @@ const Search = () => {
       </div>
 
       {loading ? <PopcornLoading /> : null}
-      <section id="results">
-        {movies.length > 0
-          ? movies.map((m, i) => <MovieResult key={i} movie={m} />)
-          : null}
-      </section>
+      {movies.length > 0 ? (
+        <section id="results">
+          {movies.map((m, i) => (
+            <MovieResult key={i} movie={m} />
+          ))}
+        </section>
+      ) : null}
     </section>
   );
 };

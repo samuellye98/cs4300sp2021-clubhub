@@ -8,25 +8,40 @@ const MovieResult = (props) => {
   const rounded_sim = cosine_similarity.toFixed(3);
 
   return (
-    <a href={"https://www.themoviedb.org/tv/" + id} target="_blank" rel="noreferrer noopener">
-      <section className="movie-card">
-        <h4 className="movie-title">{name}</h4>
-        <div className="movie-content">
-          <div className="movie-txt">
-            <p className="movie-rating">Similarity: {rounded_sim}</p>
-            <p className="movie-rating">TMDb Rating: {rating}</p>
-            <p className="movie-description">
-              {cut_desc}... <a href={"https://www.themoviedb.org/tv/" + id} target="_blank" rel="noreferrer noopener">read more</a>
-            </p>
-          </div>
-          <img
-            src={`https://image.tmdb.org/t/p/original/${img}`}
-            alt={`${name}-img`}
-            className="movie-img"
-          />
+    // <a
+    //   href={'https://www.themoviedb.org/tv/' + id}
+    //   target="_blank"
+    //   rel="noreferrer noopener"
+    // >
+    <section className="movie-card">
+      <h4 className="movie-title">{name}</h4>
+      <div className="movie-content">
+        <div className="movie-txt">
+          <p className="movie-rating">Similarity: {rounded_sim}</p>
+          <p className="movie-rating">TMDb Rating: {rating}</p>
+          <p className="movie-description">
+            {cut_desc}...{' '}
+            <a
+              href={'https://www.themoviedb.org/tv/' + id}
+              target="_blank"
+              rel="noreferrer noopener"
+            >
+              read more
+            </a>
+          </p>
         </div>
-      </section >
-    </a>
+        <img
+          src={
+            img === null
+              ? require('../../assets/images/movie_placeholder.png').default
+              : `https://image.tmdb.org/t/p/original/${img}`
+          }
+          alt={`${name}-img`}
+          className="movie-img"
+        />
+      </div>
+    </section>
+    // </a>
   );
 };
 
