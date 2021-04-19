@@ -22,13 +22,13 @@ function matchPartial(string) {
   return new RegExp(`(?:^|\\s)${escapeForRegExp(string)}`, 'i');
 }
 
-function matchExact(string) {
-  return new RegExp(`^${escapeForRegExp(string)}$`, 'i');
-}
+// function matchExact(string) {
+//   return new RegExp(`^${escapeForRegExp(string)}$`, 'i');
+// }
 
 const AutoTag = (props) => {
   const [query, setQuery] = useState('');
-  const [index, setIndex] = useState(-1);
+  const [index, setIndex] = useState(0);
   const [options, setOptions] = useState([]);
 
   const containerRef = useRef();
@@ -63,10 +63,12 @@ const AutoTag = (props) => {
   const onKeyDown = (event) => {
     // when one of the terminating keys is pressed, add current query to the tags
     if (event.key === KEYS.ENTER || event.key === KEYS.TAB) {
-      if (query || index > -1) {
+      if (query || index >= 0) {
         event.preventDefault();
       }
 
+      // TO FIX
+      console.log('OPTIONS', options, index);
       if (options.length > 0 && !options[index].hasOwnProperty('disabled')) {
         addTag(options[index]);
       }
@@ -93,25 +95,23 @@ const AutoTag = (props) => {
   const addTag = (tag) => {
     // Check for duplicates
     if (!props.tags.some((t) => t.name === tag.name)) {
-      props.onAddition({ name: tag.name, weight: 0.1 });
+      props.onAddition(tag.name);
       reset();
     }
   };
 
   const reset = () => {
     setQuery('');
-    setIndex(-1);
+    setIndex(0);
   };
 
   return (
     <div ref={containerRef} className="autotag-container">
       <Input
+        numTags={props.tags.length}
         query={query}
-        index={index}
         inputRef={inputRef}
         inputEventHandlers={inputEventHandlers}
-        // deleteTag={deleteTag}
-        tags={props.tags}
       />
       <Suggestions
         query={query}
@@ -125,9 +125,10 @@ const AutoTag = (props) => {
           {props.tags.map((tag, i) => (
             <Tag
               key={i}
+              i={i}
               tag={tag}
               deleteTag={() => props.onDelete(i)}
-              // updateWeight={props.updateWeight}
+              updateWeight={props.updateWeight}
             />
           ))}
 

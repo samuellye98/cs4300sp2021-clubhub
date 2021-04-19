@@ -2,7 +2,8 @@ import React from 'react';
 import './autotag.css';
 
 const Tag = (props) => {
-  const { tag, updateWeight, deleteTag } = props;
+  const { i, tag, updateWeight, deleteTag } = props;
+
   return (
     <div className="tag-container">
       <div className="tag">
@@ -15,12 +16,15 @@ const Tag = (props) => {
       <div className="weight-container">
         <input
           className="weight-input"
-          //   value={tag.weight}
+          value={tag.weight}
           type="number"
           min="0.1"
-          max="1.0"
+          max="10"
           step="0.1"
-          //   onChange={() => updateWeight(t)}
+          onKeyDown={(evt) => evt.preventDefault()}
+          onChange={(e) => {
+            updateWeight(e.target.value, i);
+          }}
         />
         <span className="weight-text">Weight</span>
       </div>
