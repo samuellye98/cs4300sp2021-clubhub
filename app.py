@@ -2,7 +2,7 @@
 from gevent import monkey
 monkey.patch_all()
 
-from api import api as api
+# from api import api as api
 from nltk.tokenize import TreebankWordTokenizer
 from collections import defaultdict
 import pickle
@@ -33,7 +33,7 @@ db = SQLAlchemy(app)
 
 # Import + Register Blueprints
 
-app.register_blueprint(api)
+# app.register_blueprint(api)
 
 # Initialize app w/SocketIO
 socketio.init_app(app)

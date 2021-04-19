@@ -4,5 +4,5 @@ from flask import Blueprint
 api = Blueprint('api', __name__, url_prefix='/api')
 # Import + Register Blueprints
 
-from api.accounts import accounts as accounts
-from api.irsystem import irsystem as irsystem
+# from api.accounts import accounts as accounts
+# from api.irsystem import irsystem as irsystem
