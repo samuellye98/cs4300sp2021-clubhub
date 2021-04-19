@@ -1,0 +1,24 @@
+.movie-card {
+  border-radius: 25px;
+  background-color: white;
+  opacity: 0.75;
+  padding: 3%;
+  max-width: 30%;
+}
+
+.movie-img {
+  text-align: center;
+  width: 50%;
+}
+
+.movie-title {
+  text-align: center;
+}
+
+.movie-rating {
+}
+
+.movie-description {
+  margin-top: 2%;
+  color: rgb(80, 80, 80);
+}

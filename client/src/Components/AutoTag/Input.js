@@ -3,7 +3,7 @@ import SearchIcon from './SearchIcon';
 import './autotag.css';
 
 const Input = (props) => {
-  const { inputRef, query, inputEventHandlers } = props;
+  const { numTags, inputRef, query, inputEventHandlers } = props;
   return (
     <div className="autotag-input-container">
       <SearchIcon width={30} height={30} color="#ccc" />
@@ -13,6 +13,7 @@ const Input = (props) => {
         value={query}
         placeholder={'Enter a club'}
         {...inputEventHandlers}
+        disabled={numTags === 5}
       />
     </div>
   );

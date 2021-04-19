@@ -31,3 +31,8 @@
   font-size: 36px;
   margin-bottom: 60px;
 }
+
+.search-btn {
+  background-color: blue;
+  border-radius: 15px;
+}
