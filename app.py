@@ -1,4 +1,7 @@
 # Gevent needed for sockets
+from gevent import monkey
+monkey.patch_all()
+
 import os
 from flask import Flask, render_template, jsonify, request, g
 from flask_sqlalchemy import SQLAlchemy
@@ -10,8 +13,6 @@ import json
 import pickle
 from collections import defaultdict
 from nltk.tokenize import TreebankWordTokenizer
-from gevent import monkey
-monkey.patch_all()
 
 # from api import api as api
 
