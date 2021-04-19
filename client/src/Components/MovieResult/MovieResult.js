@@ -8,7 +8,11 @@ const MovieResult = (props) => {
   return (
     <section className="movie-card">
       <img
-        src={`https://image.tmdb.org/t/p/original/${img}`}
+        src={
+          img === null
+            ? require('../../assets/images/movie_placeholder.png').default
+            : `https://image.tmdb.org/t/p/original/${img}`
+        }
         alt={`${name}-img`}
         className="movie-img"
       />
