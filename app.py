@@ -28,9 +28,7 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 # DB
 db = SQLAlchemy(app)
 
-# Import + Register Blueprints
-
-# app.register_blueprint(api)
+# app.register_blueprint(api) # Import + Register Blueprints
 
 # Initialize app w/SocketIO
 socketio.init_app(app)
