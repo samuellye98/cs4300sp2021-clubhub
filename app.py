@@ -114,7 +114,6 @@ def index_search(query, index=inv_idx, idf=idf, doc_norms=doc_norms, tokenizer=T
         queryUrl = 'https://api.themoviedb.org/3/tv/' + str(
             showId) + '?api_key=06f6526774c6bdba14bded4a2244fe36&language=en-US'
         resp = requests.get(queryUrl)
-        print('abc', resp)
         res = resp.json()
         showItem = {}
         showItem['id'] = showId
@@ -125,7 +124,7 @@ def index_search(query, index=inv_idx, idf=idf, doc_norms=doc_norms, tokenizer=T
         showItem['number_of_episodes'] = res['number_of_episodes']
         showItem['number_of_seasons'] = res['number_of_seasons']
         showItem['description'] = res['overview']
-        showItem['poster_path'] = res['poster_path']
+        showItem['img'] = res['poster_path']
         showItem['rating'] = res['vote_average']
         movieRes.append(showItem)
     return movieRes

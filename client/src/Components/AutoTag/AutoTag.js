@@ -68,7 +68,6 @@ const AutoTag = (props) => {
       }
 
       // TO FIX
-      console.log('OPTIONS', options, index);
       if (options.length > 0 && !options[index].hasOwnProperty('disabled')) {
         addTag(options[index]);
       }
@@ -132,7 +131,11 @@ const AutoTag = (props) => {
             />
           ))}
 
-          <div className="submit-btn-container"></div>
+          <div className="submit-btn-container">
+            <button className="submit-btn" onClick={props.handleSubmit}>
+              Search for movies
+            </button>
+          </div>
         </div>
       ) : null}
     </div>
