@@ -1,19 +1,19 @@
 # Gevent needed for sockets
+import os
+from flask import Flask, render_template, jsonify, request, g
+from flask_sqlalchemy import SQLAlchemy
+from flask_socketio import SocketIO
+from flask_cors import CORS, cross_origin
+import requests
+import math
+import json
+import pickle
+from collections import defaultdict
+from nltk.tokenize import TreebankWordTokenizer
 from gevent import monkey
 monkey.patch_all()
 
-from api import api as api
-from nltk.tokenize import TreebankWordTokenizer
-from collections import defaultdict
-import pickle
-import json
-import math
-import requests
-from flask_cors import CORS, cross_origin
-from flask_socketio import SocketIO
-from flask_sqlalchemy import SQLAlchemy
-from flask import Flask, render_template, jsonify, request, g
-import os
+# from api import api as api
 
 
 # Imports
@@ -33,7 +33,7 @@ db = SQLAlchemy(app)
 
 # Import + Register Blueprints
 
-app.register_blueprint(api)
+# app.register_blueprint(api)
 
 # Initialize app w/SocketIO
 socketio.init_app(app)
