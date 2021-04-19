@@ -125,7 +125,7 @@ def index_search(query, index=inv_idx, idf=idf, doc_norms=doc_norms, tokenizer=T
         showItem['number_of_episodes'] = res['number_of_episodes']
         showItem['number_of_seasons'] = res['number_of_seasons']
         showItem['description'] = res['overview']
-        showItem['poster_path'] = res['poster_path']
+        showItem['img'] = res['poster_path']
         showItem['rating'] = res['vote_average']
         movieRes.append(showItem)
     return movieRes

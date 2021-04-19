@@ -1,17 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Button } from 'react-bootstrap';
 import axios from 'axios';
 import env from 'react-dotenv';
+import Title from '../Title/Title';
 import AutoTag from '../AutoTag/AutoTag';
 import PopcornLoading from '../PopcornLoading/PopcornLoading';
 import MovieResult from '../MovieResult/MovieResult';
 import suggestionsJson from '../../suggestions.json';
 import './search.css';
-
-// const searchAPI =
-//   process.env.NODE_ENV === 'production'
-//     ? env.SEARCH_API_PRODUCTION
-//     : env.SEARCH_API_DEV;
 
 const postAPI =
   process.env.NODE_ENV === 'production'
@@ -19,17 +14,11 @@ const postAPI =
     : env.POST_API_DEV;
 
 const Search = () => {
-  const [data, setData] = useState({ project_name: '', net_id: '' });
   const [tags, setTags] = useState([]);
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    // async function fectchData() {
-    //   const result = await axios(searchAPI);
-    //   setData(result.data);
-    // }
-    // fectchData();
     document.title = 'ClubHub'; // Set HTML title
   }, []);
 
@@ -77,28 +66,29 @@ const Search = () => {
         },
       })
       .then((res) => {
+        console.log(res.data);
         setLoading(false);
         setMovies(res.data);
-      });
+      })
+      .catch((e) => setLoading(false));
   };
 
   return (
     <section id="search">
       <div className="search-hero-image">
         <div className="hero-content">
-          <div className="search-title">
+          <Title />
+          {/* <div className="search-title">
             <span>What are you looking for?</span>
-          </div>
+          </div> */}
           <AutoTag
             tags={tags}
             suggestions={suggestionsJson['suggestions']}
             onDelete={onDelete}
             onAddition={onAddition}
             updateWeight={updateWeight}
+            handleSubmit={handleSubmit}
           />
-          <button className="submit-btn" onClick={handleSubmit}>
-            Search for movies
-          </button>
         </div>
       </div>
 

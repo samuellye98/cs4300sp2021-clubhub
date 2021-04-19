@@ -132,7 +132,11 @@ const AutoTag = (props) => {
             />
           ))}
 
-          <div className="submit-btn-container"></div>
+          <div className="submit-btn-container">
+            <button className="submit-btn" onClick={props.handleSubmit}>
+              Search for movies
+            </button>
+          </div>
         </div>
       ) : null}
     </div>
