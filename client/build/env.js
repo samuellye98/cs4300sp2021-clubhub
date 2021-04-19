@@ -42,7 +42,7 @@ window.env = {
   "npm_config_local_address": "",
   "npm_config_git_tag_version": "true",
   "npm_config_cert": "",
-  "TERM_SESSION_ID": "930DFC5A-D6D1-4B6C-8E98-D25218410A58",
+  "TERM_SESSION_ID": "F56AF680-25CE-4457-A17E-190409497668",
   "npm_config_registry": "https://registry.npmjs.org/",
   "npm_config_noproxy": "",
   "npm_config_fetch_retries": "2",

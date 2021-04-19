@@ -66,8 +66,8 @@ const Search = () => {
       })
       .then((res) => {
         console.log(res.data);
-        setLoading(false);
         setMovies(res.data);
+        setLoading(false);
       })
       .catch((e) => setLoading(false));
   };
@@ -92,7 +92,7 @@ const Search = () => {
       </div>
 
       {loading ? <PopcornLoading /> : null}
-      {movies.length > 0 ? (
+      {movies.length > 0 && !loading ? (
         <section id="results">
           {movies.map((m, i) => (
             <MovieResult key={i} movie={m} />
