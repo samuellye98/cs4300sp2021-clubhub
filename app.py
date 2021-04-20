@@ -63,9 +63,9 @@ def milestone1():
                     "net_id": "Cora Wu (cjw322), Jonathan Gao (jg992), Josiah Kek (jrk322), Rishabh Sarup (rs868), Samuel Lye (sl2982)"})
 
 
-@app.route('/getMovies', methods=['POST'])
+@app.route('/getShows', methods=['POST'])
 @cross_origin()
-def getMovies():
+def getShows():
     clubs = request.json['data']
     query = ' '.join([club_to_desc[c['name']] for c in clubs])
     return json.dumps(index_search(query))
@@ -107,10 +107,10 @@ def index_search(query, index=inv_idx, idf=idf, doc_norms=doc_norms, tokenizer=T
     for doc, score in document_scores.items():
         ret.append((score, doc))
 
-    sortedMovies = sorted(ret, key=lambda x: (-x[0], x[1]))[:10]
+    sortedShows = sorted(ret, key=lambda x: (-x[0], x[1]))[:10]
 
-    movieRes = []
-    for score, idx in sortedMovies:
+    showRes = []
+    for score, idx in sortedShows:
         showId = index_to_movieid[idx]
         queryUrl = 'https://api.themoviedb.org/3/tv/' + str(
             showId) + '?api_key=06f6526774c6bdba14bded4a2244fe36&language=en-US'
@@ -127,8 +127,8 @@ def index_search(query, index=inv_idx, idf=idf, doc_norms=doc_norms, tokenizer=T
         showItem['description'] = res['overview']
         showItem['img'] = res['poster_path']
         showItem['rating'] = res['vote_average']
-        movieRes.append(showItem)
-    return movieRes
+        showRes.append(showItem)
+    return showRes
 
 
 if __name__ == "__main__":

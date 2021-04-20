@@ -1,7 +1,7 @@
 import React from 'react';
-import './movieresult.css';
+import './showresult.css';
 
-const MovieResult = (props) => {
+const ShowResult = (props) => {
   // we should also get a ranking to display and a similarity score if possible
   const { id, name, description, rating, cosine_similarity, img } = props.movie;
   const cut_desc = description.split(' ').slice(0, 50).join(' ');
@@ -13,13 +13,13 @@ const MovieResult = (props) => {
     //   target="_blank"
     //   rel="noreferrer noopener"
     // >
-    <section className="movie-card">
-      <h4 className="movie-title">{name}</h4>
-      <div className="movie-content">
-        <div className="movie-txt">
-          <p className="movie-rating">Similarity: {rounded_sim}</p>
-          <p className="movie-rating">TMDb Rating: {rating}</p>
-          <p className="movie-description">
+    <section className="show-card">
+      <h4 className="show-title">{name}</h4>
+      <div className="show-content">
+        <div className="show-txt">
+          <p className="show-rating">Similarity: {rounded_sim}</p>
+          <p className="show-rating">TMDb Rating: {rating}</p>
+          <p className="show-description">
             {cut_desc}...{' '}
             <a
               href={'https://www.themoviedb.org/tv/' + id}
@@ -33,11 +33,11 @@ const MovieResult = (props) => {
         <img
           src={
             img === null
-              ? require('../../assets/images/movie_placeholder.png').default
+              ? require('../../assets/images/show_placeholder.png').default
               : `https://image.tmdb.org/t/p/original/${img}`
           }
           alt={`${name}-img`}
-          className="movie-img"
+          className="show-img"
         />
       </div>
     </section>
@@ -45,4 +45,4 @@ const MovieResult = (props) => {
   );
 };
 
-export default MovieResult;
+export default ShowResult;
