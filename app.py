@@ -11,7 +11,7 @@ import requests
 import math
 import json
 import pickle
-from collections import defaultdict
+from collections import defaultdict, Counter
 from nltk.tokenize import TreebankWordTokenizer
 
 # from api import api as api
@@ -49,8 +49,9 @@ doc_norms = pickle.load(open("api/bin_files/doc_norms.bin", "rb"))
 idf = pickle.load(open("api/bin_files/idf.bin", "rb"))
 index_to_movieid = pickle.load(open("api/bin_files/index_to_movieid.bin", "rb"))
 inv_idx = pickle.load(open("api/bin_files/inv_idx.bin", "rb"))
-club_to_desc = pickle.load(open("api/bin_files/club_to_desc.bin", "rb"))
-
+# club_to_desc = pickle.load(open("api/bin_files/club_to_desc.bin", "rb"))
+with open("./api/bin_files/club_to_desc.json") as f:
+    club_to_desc = json.load(f)
 
 @app.route('/')
 def root():
@@ -78,16 +79,8 @@ def index_search(query, index=inv_idx, idf=idf, doc_norms=doc_norms, tokenizer=T
     query = query.lower()
     query = tokenizer.tokenize(query)
 
-    # get frequencies
-    freq = {}
-    for token in query:
-        if token in idf:
-            if not token in freq:
-                freq[token] = 1
-            else:
-                freq[token] += 1
-
-    # get tfidf
+    # tfidf for query
+    freq = Counter(query)
     query_tfidf = defaultdict(float)
     for term in freq:
         if term in idf:
