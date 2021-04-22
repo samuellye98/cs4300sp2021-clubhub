@@ -12,7 +12,8 @@ import math
 import json
 import pickle
 from collections import defaultdict, Counter
-from nltk.tokenize import TreebankWordTokenizer
+import numpy as np
+from sklearn.metrics.pairwise import cosine_similarity
 
 # from api import api as api
 
@@ -41,11 +42,14 @@ socketio.init_app(app)
 #     return render_template("404.html"), 404
 
 
-doc_norms = pickle.load(open("api/bin_files/doc_norms_mov.bin", "rb"))
-idf = pickle.load(open("api/bin_files/idf_mov.bin", "rb"))
+tfidf_vec_movies = pickle.load(open("api/bin_files/tfidf_vec_movies.bin", "rb"))
+tfidf_mat_movies = pickle.load(open("api/bin_files/tfidf_mat_movies.bin", "rb"))
 index_to_movieid = pickle.load(open("api/bin_files/index_to_movieid.bin", "rb"))
-inv_idx = pickle.load(open("api/bin_files/inv_idx_mov.bin", "rb"))
 club_to_desc = pickle.load(open("api/bin_files/club_to_desc.bin", "rb"))
+
+import resource
+mac_memory_in_MB = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / (2**20)
+print(mac_memory_in_MB)
 
 @app.route('/')
 def root():
@@ -64,41 +68,27 @@ def milestone1():
 def getShows():
     clubs = request.json['data']
     query = ' '.join([club_to_desc[c['name']] for c in clubs])
-    return json.dumps(index_search(query))
+    
+    mac_memory_in_MB = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / (2**20)
+    print(mac_memory_in_MB)
+    
+    return json.dumps(gen_cosine_sim(query))
 
 
-def index_search(query, index=inv_idx, idf=idf, doc_norms=doc_norms, tokenizer=TreebankWordTokenizer()):
-    ret = []
+def gen_cosine_sim(query, tfidf_vectorizer=tfidf_vec_movies, tfidf_mat=tfidf_mat_movies):
+    """
+    query: query string
+    tfidf_vectorizer: TfIdfVectorizer model
+    tfidf_mat: tfidf vectors for all docs
 
-    # tokenize
-    query = query.lower()
-    query = tokenizer.tokenize(query)
-
-    # tfidf for query
-    freq = Counter(query)
-    query_tfidf = defaultdict(float)
-    for term in freq:
-        if term in idf:
-            query_tfidf[term] = freq[term] * idf[term]
-
-    # normalize
-    norm = math.sqrt(sum([query_tfidf[term] ** 2 for term in query_tfidf]))
-
-    document_scores = defaultdict(int)
-    for term in query_tfidf:
-        for doc, freq in index[term]:
-            document_scores[doc] += query_tfidf[term] * freq * idf[term]
-
-    for doc_idx in document_scores:
-        document_scores[doc_idx] /= (doc_norms[doc_idx] * norm)
-
-    for doc, score in document_scores.items():
-        ret.append((score, doc))
-
-    sortedShows = sorted(ret, key=lambda x: (-x[0], x[1]))[:10]
+    return: cosine similarity between query and all docs
+    """
+    query_tfidf = tfidf_vectorizer.transform([query])
+    cosineSimilarities = cosine_similarity(query_tfidf, tfidf_mat).flatten()
+    sortedShows = np.argsort(-1*cosineSimilarities)[:10]
 
     showRes = []
-    for score, idx in sortedShows:
+    for idx in sortedShows:
         showId = index_to_movieid[idx]
         queryUrl = 'https://api.themoviedb.org/3/movie/' + str(
             showId) + '?api_key=06f6526774c6bdba14bded4a2244fe36&language=en-US'
@@ -106,7 +96,7 @@ def index_search(query, index=inv_idx, idf=idf, doc_norms=doc_norms, tokenizer=T
         res = resp.json()
         showItem = {}
         showItem['id'] = showId
-        showItem['cosine_similarity'] = score
+        showItem['cosine_similarity'] = cosineSimilarities[idx]
         showItem['runtime'] = res['runtime']
         showItem['genres'] = res['genres']
         showItem['name'] = res['title']
