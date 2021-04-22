@@ -47,8 +47,6 @@ const AutoTag = (props) => {
         return regexp.test(item.name);
       });
 
-      // options = options.slice(0, props.maxSuggestionsLength);
-
       if (options.length === 0) {
         options.push({
           name: 'No clubs found',
@@ -172,7 +170,6 @@ const AutoTag = (props) => {
 
 AutoTag.defaultProps = {
   minQueryLength: 2,
-  maxSuggestionsLength: 6,
 };
 
 AutoTag.propTypes = {
@@ -181,7 +178,6 @@ AutoTag.propTypes = {
   onDelete: PropTypes.func.isRequired,
   onAddition: PropTypes.func.isRequired,
   minQueryLength: PropTypes.number,
-  maxSuggestionsLength: PropTypes.number,
 };
 
 export default AutoTag;

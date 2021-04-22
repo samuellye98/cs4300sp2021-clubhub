@@ -41,14 +41,11 @@ socketio.init_app(app)
 #     return render_template("404.html"), 404
 
 
-doc_norms = pickle.load(open("api/bin_files/doc_norms.bin", "rb"))
-idf = pickle.load(open("api/bin_files/idf.bin", "rb"))
+doc_norms = pickle.load(open("api/bin_files/doc_norms_mov.bin", "rb"))
+idf = pickle.load(open("api/bin_files/idf_mov.bin", "rb"))
 index_to_movieid = pickle.load(open("api/bin_files/index_to_movieid.bin", "rb"))
-inv_idx = pickle.load(open("api/bin_files/inv_idx.bin", "rb"))
-
-# club_to_desc = pickle.load(open("api/bin_files/club_to_desc.bin", "rb"))
-with open("./api/bin_files/club_to_desc.json") as f:
-    club_to_desc = json.load(f)
+inv_idx = pickle.load(open("api/bin_files/inv_idx_mov.bin", "rb"))
+club_to_desc = pickle.load(open("api/bin_files/club_to_desc.bin", "rb"))
 
 @app.route('/')
 def root():
@@ -103,18 +100,16 @@ def index_search(query, index=inv_idx, idf=idf, doc_norms=doc_norms, tokenizer=T
     showRes = []
     for score, idx in sortedShows:
         showId = index_to_movieid[idx]
-        queryUrl = 'https://api.themoviedb.org/3/tv/' + str(
+        queryUrl = 'https://api.themoviedb.org/3/movie/' + str(
             showId) + '?api_key=06f6526774c6bdba14bded4a2244fe36&language=en-US'
         resp = requests.get(queryUrl)
         res = resp.json()
         showItem = {}
         showItem['id'] = showId
         showItem['cosine_similarity'] = score
-        showItem['episode_run_time'] = res['episode_run_time']
+        showItem['runtime'] = res['runtime']
         showItem['genres'] = res['genres']
-        showItem['name'] = res['name']
-        showItem['number_of_episodes'] = res['number_of_episodes']
-        showItem['number_of_seasons'] = res['number_of_seasons']
+        showItem['name'] = res['title']
         showItem['description'] = res['overview']
         showItem['img'] = res['poster_path']
         showItem['rating'] = res['vote_average']
