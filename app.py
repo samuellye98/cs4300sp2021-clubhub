@@ -3,7 +3,7 @@ from gevent import monkey
 monkey.patch_all()
 
 import os
-from flask import Flask, render_template, jsonify, request, g
+from flask import Flask, render_template, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_socketio import SocketIO
 from flask_cors import CORS, cross_origin
@@ -15,9 +15,6 @@ from collections import defaultdict, Counter
 from nltk.tokenize import TreebankWordTokenizer
 
 # from api import api as api
-
-
-# Imports
 
 # Configure app
 socketio = SocketIO()
@@ -33,7 +30,6 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 db = SQLAlchemy(app)
 
 # Import + Register Blueprints
-
 # app.register_blueprint(api)
 
 # Initialize app w/SocketIO
@@ -49,6 +45,7 @@ doc_norms = pickle.load(open("api/bin_files/doc_norms.bin", "rb"))
 idf = pickle.load(open("api/bin_files/idf.bin", "rb"))
 index_to_movieid = pickle.load(open("api/bin_files/index_to_movieid.bin", "rb"))
 inv_idx = pickle.load(open("api/bin_files/inv_idx.bin", "rb"))
+
 # club_to_desc = pickle.load(open("api/bin_files/club_to_desc.bin", "rb"))
 with open("./api/bin_files/club_to_desc.json") as f:
     club_to_desc = json.load(f)
@@ -62,6 +59,7 @@ def root():
 def milestone1():
     return jsonify({"project_name": "ClubHub",
                     "net_id": "Cora Wu (cjw322), Jonathan Gao (jg992), Josiah Kek (jrk322), Rishabh Sarup (rs868), Samuel Lye (sl2982)"})
+
 
 
 @app.route('/getShows', methods=['POST'])
