@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.css": "/static/css/main.ffbc3863.chunk.css",
-    "main.js": "/static/js/main.de568a98.chunk.js",
-    "main.js.map": "/static/js/main.de568a98.chunk.js.map",
+    "main.css": "/static/css/main.4dbbfd8a.chunk.css",
+    "main.js": "/static/js/main.ba9ba122.chunk.js",
+    "main.js.map": "/static/js/main.ba9ba122.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.83ac8ed1.js",
     "runtime-main.js.map": "/static/js/runtime-main.83ac8ed1.js.map",
     "static/js/2.bf2273bc.chunk.js": "/static/js/2.bf2273bc.chunk.js",
@@ -10,15 +10,15 @@
     "static/js/3.2854aa43.chunk.js": "/static/js/3.2854aa43.chunk.js",
     "static/js/3.2854aa43.chunk.js.map": "/static/js/3.2854aa43.chunk.js.map",
     "index.html": "/index.html",
-    "static/css/main.ffbc3863.chunk.css.map": "/static/css/main.ffbc3863.chunk.css.map",
+    "static/css/main.4dbbfd8a.chunk.css.map": "/static/css/main.4dbbfd8a.chunk.css.map",
     "static/js/2.bf2273bc.chunk.js.LICENSE.txt": "/static/js/2.bf2273bc.chunk.js.LICENSE.txt",
     "static/media/search.css": "/static/media/aesthetic-movie-theatre.2a8b6908.jpeg",
-    "static/media/movie_placeholder.png": "/static/media/movie_placeholder.5ed52dd9.png"
+    "static/media/show_placeholder.png": "/static/media/show_placeholder.5ed52dd9.png"
   },
   "entrypoints": [
     "static/js/runtime-main.83ac8ed1.js",
     "static/js/2.bf2273bc.chunk.js",
-    "static/css/main.ffbc3863.chunk.css",
-    "static/js/main.de568a98.chunk.js"
+    "static/css/main.4dbbfd8a.chunk.css",
+    "static/js/main.ba9ba122.chunk.js"
   ]
 }

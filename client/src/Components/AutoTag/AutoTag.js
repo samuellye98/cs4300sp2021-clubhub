@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
 import PropTypes from 'prop-types';
 import Input from './Input';
 import Tag from './Tag';
@@ -33,6 +33,7 @@ const AutoTag = (props) => {
 
   const containerRef = useRef();
   const inputRef = useRef();
+  // const elmRefs = useRef();
 
   const onInput = (event) => {
     const input = event.target.value;
@@ -46,7 +47,7 @@ const AutoTag = (props) => {
         return regexp.test(item.name);
       });
 
-      options = options.slice(0, props.maxSuggestionsLength);
+      // options = options.slice(0, props.maxSuggestionsLength);
 
       if (options.length === 0) {
         options.push({
@@ -84,11 +85,33 @@ const AutoTag = (props) => {
     }
   };
 
+  // Scroll suggestions using up and down keys
+  const [liRefs, setLiRefs] = useState({});
+  useEffect(() => {
+    // Change refs to <li> tags if options change
+    setLiRefs(
+      options.reduce((acc, value, i) => {
+        acc[i] = React.createRef();
+        return acc;
+      }, {})
+    );
+  }, [options]);
+
+  useLayoutEffect(() => {
+    // Scroll to appropriate li element
+    if (options.length > 0) {
+      liRefs[index].current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+      });
+    }
+  }, [index]);
+
   const inputEventHandlers = {
     onInput: onInput,
+    onKeyDown: onKeyDown,
     // onFocus: onFocus,
     // onChange: () => {},
-    onKeyDown: onKeyDown,
   };
 
   const addTag = (tag) => {
@@ -113,6 +136,7 @@ const AutoTag = (props) => {
         inputEventHandlers={inputEventHandlers}
       />
       <Suggestions
+        liRefs={liRefs}
         query={query}
         index={index}
         options={options}
@@ -132,8 +156,12 @@ const AutoTag = (props) => {
           ))}
 
           <div className="submit-btn-container">
-            <button className="submit-btn" onClick={props.handleSubmit}>
-              Search for movies
+            <button
+              className="submit-btn"
+              onClick={props.handleSubmit}
+              disabled={props.loading}
+            >
+              Search for shows
             </button>
           </div>
         </div>

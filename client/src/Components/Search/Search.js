@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import env from 'react-dotenv';
 import Title from '../Title/Title';
 import AutoTag from '../AutoTag/AutoTag';
 import PopcornLoading from '../PopcornLoading/PopcornLoading';
-import MovieResult from '../MovieResult/MovieResult';
+import ShowResult from '../ShowResult/ShowResult';
 import suggestionsJson from '../../suggestions.json';
 import './search.css';
 
@@ -15,8 +15,9 @@ const postAPI =
 
 const Search = () => {
   const [tags, setTags] = useState([]);
-  const [movies, setMovies] = useState([]);
+  const [shows, setShows] = useState([]);
   const [loading, setLoading] = useState(false);
+  const resultsRef = useRef();
 
   useEffect(() => {
     document.title = 'ClubHub'; // Set HTML title
@@ -60,17 +61,26 @@ const Search = () => {
     axios
       .post(postAPI, JSON.stringify({ data: tags }), {
         headers: {
-          // Overwrite Axios's automatically set Content-Type
           'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
         },
       })
       .then((res) => {
         console.log(res.data);
+        setShows(res.data);
         setLoading(false);
-        setMovies(res.data);
       })
       .catch((e) => setLoading(false));
   };
+
+  useEffect(() => {
+    if (shows.length > 0 && !loading) {
+      resultsRef.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      });
+    }
+  }, [shows, loading]);
 
   return (
     <section id="search">
@@ -87,18 +97,21 @@ const Search = () => {
             onAddition={onAddition}
             updateWeight={updateWeight}
             handleSubmit={handleSubmit}
+            loading={loading}
           />
         </div>
       </div>
 
       {loading ? <PopcornLoading /> : null}
-      {movies.length > 0 ? (
-        <section id="results">
-          {movies.map((m, i) => (
-            <MovieResult key={i} movie={m} />
-          ))}
-        </section>
-      ) : null}
+      <div ref={resultsRef}>
+        {shows.length > 0 && !loading ? (
+          <div id="results">
+            {shows.map((m, i) => (
+              <ShowResult key={i} movie={m} />
+            ))}
+          </div>
+        ) : null}
+      </div>
     </section>
   );
 };

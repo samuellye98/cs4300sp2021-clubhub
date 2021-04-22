@@ -22,34 +22,37 @@ const SuggestionComponent = ({ item, query }) =>
   );
 
 const Suggestions = (props) => {
+  const { addTag, options, index, query, liRefs } = props;
+
   const onMouseDown = (event, item) => {
     // focus is shifted on mouse down but calling preventDefault prevents this
     event.preventDefault();
 
     if (!item.hasOwnProperty('disabled')) {
       // Only can add if it's a valid tag
-      props.addTag(item);
+      addTag(item);
     }
   };
 
-  return props.options.length === 0 ? null : (
+  return options.length === 0 ? null : (
     <div className="autotag-suggestions">
-      <ul>
-        {props.options.map((item, i) => {
+      <ul className="autotag-scroll">
+        {options.map((item, i) => {
           return (
             <li
               key={i}
+              ref={liRefs[i]}
               disabled={item.disabled === true}
               onMouseDown={(event) => onMouseDown(event, item)}
               className={
                 item.hasOwnProperty('disabled')
                   ? 'is-disabled'
-                  : i === props.index
+                  : i === index
                   ? 'is-active'
                   : ''
               }
             >
-              <SuggestionComponent item={item} query={props.query} />
+              <SuggestionComponent item={item} query={query} />
             </li>
           );
         })}
