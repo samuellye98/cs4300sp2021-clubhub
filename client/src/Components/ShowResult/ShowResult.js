@@ -22,7 +22,7 @@ const ShowResult = (props) => {
           <p className="show-description">
             {cut_desc}...{' '}
             <a
-              href={'https://www.themoviedb.org/tv/' + id}
+              href={'https://www.themoviedb.org/movie/' + id}
               target="_blank"
               rel="noreferrer noopener"
             >
