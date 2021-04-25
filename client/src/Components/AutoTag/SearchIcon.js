@@ -3,7 +3,7 @@ import React from 'react';
 const SearchIcon = (props) => {
   const { width, height, color } = props;
   return (
-    <div className="search-icon-container">
+    <div className="icon-container">
       <svg
         fill={color}
         width={width}

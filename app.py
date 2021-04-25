@@ -66,8 +66,11 @@ def milestone1():
 @app.route('/getShows', methods=['POST'])
 @cross_origin()
 def getShows():
-    clubs = request.json['data']
-    query = ' '.join([club_to_desc[c['name']] for c in clubs])
+    resp = request.json
+    clubs, freeText, genre = resp['data'], resp['freeText'], resp['genre']
+    query = ' '.join([club_to_desc[c['name']] for c in clubs]) 
+    if freeText:
+        query += ' ' + freeText
     
     mac_memory_in_MB = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / (2**20)
     print(mac_memory_in_MB)

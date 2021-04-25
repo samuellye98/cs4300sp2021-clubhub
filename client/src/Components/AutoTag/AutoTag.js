@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
 import PropTypes from 'prop-types';
 import Input from './Input';
-import Tag from './Tag';
 import Suggestions from './Suggestions';
 import './autotag.css';
 
@@ -132,6 +131,8 @@ const AutoTag = (props) => {
         query={query}
         inputRef={inputRef}
         inputEventHandlers={inputEventHandlers}
+        showAdvanced={props.showAdvanced}
+        setShowAdvanced={props.setShowAdvanced}
       />
       <Suggestions
         liRefs={liRefs}
@@ -140,30 +141,6 @@ const AutoTag = (props) => {
         options={options}
         addTag={addTag}
       />
-
-      {props.tags.length > 0 ? (
-        <div className="results-container ">
-          {props.tags.map((tag, i) => (
-            <Tag
-              key={i}
-              i={i}
-              tag={tag}
-              deleteTag={() => props.onDelete(i)}
-              updateWeight={props.updateWeight}
-            />
-          ))}
-
-          <div className="submit-btn-container">
-            <button
-              className="submit-btn"
-              onClick={props.handleSubmit}
-              disabled={props.loading}
-            >
-              Search for shows
-            </button>
-          </div>
-        </div>
-      ) : null}
     </div>
   );
 };
@@ -175,7 +152,6 @@ AutoTag.defaultProps = {
 AutoTag.propTypes = {
   tags: PropTypes.arrayOf(PropTypes.object),
   suggestions: PropTypes.arrayOf(PropTypes.object),
-  onDelete: PropTypes.func.isRequired,
   onAddition: PropTypes.func.isRequired,
   minQueryLength: PropTypes.number,
 };

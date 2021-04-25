@@ -3,9 +3,11 @@ import axios from 'axios';
 import env from 'react-dotenv';
 import Title from '../Title/Title';
 import AutoTag from '../AutoTag/AutoTag';
+import ClubTagContainer from '../ClubTag/ClubTagContainer';
 import PopcornLoading from '../PopcornLoading/PopcornLoading';
 import ShowResult from '../ShowResult/ShowResult';
 import suggestionsJson from '../../suggestions.json';
+import { genres } from '../../constants.js';
 import './search.css';
 
 const postAPI =
@@ -14,9 +16,17 @@ const postAPI =
     : env.POST_API_DEV;
 
 const Search = () => {
+  // Regular search
   const [tags, setTags] = useState([]);
   const [shows, setShows] = useState([]);
   const [loading, setLoading] = useState(false);
+
+  // Advanced search
+  const [showAdvanced, setShowAdvanced] = useState(false);
+  const freeTextRef = useRef();
+  const genreRef = useRef();
+
+  // Movie Results ref
   const resultsRef = useRef();
 
   useEffect(() => {
@@ -59,12 +69,20 @@ const Search = () => {
   const handleSubmit = () => {
     setLoading(true);
     axios
-      .post(postAPI, JSON.stringify({ data: tags }), {
-        headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
-        },
-      })
+      .post(
+        postAPI,
+        JSON.stringify({
+          data: tags,
+          freeText: freeTextRef.current.value.trim(),
+          genre: genreRef.current.value,
+        }),
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+          },
+        }
+      )
       .then((res) => {
         console.log(res.data);
         setShows(res.data);
@@ -93,8 +111,44 @@ const Search = () => {
           <AutoTag
             tags={tags}
             suggestions={suggestionsJson['suggestions']}
-            onDelete={onDelete}
             onAddition={onAddition}
+            showAdvanced={showAdvanced}
+            setShowAdvanced={setShowAdvanced}
+          />
+
+          {showAdvanced ? (
+            <div className="advanced-search-container">
+              <div className="advanced-search">
+                <span className="advanced-search-title">Advanced Search</span>
+                <div className="input-group">
+                  <input
+                    ref={freeTextRef}
+                    className="free-form-input"
+                    type="text"
+                    name="freeforminput"
+                    placeholder="Free form input"
+                  ></input>
+                </div>
+
+                <div className="input-select">
+                  <select ref={genreRef} name="genre" className="select">
+                    <option value={-1}>Genre</option>
+                    {genres.map((g, i) => {
+                      return (
+                        <option key={i} value={g.id}>
+                          {g.name}
+                        </option>
+                      );
+                    })}
+                  </select>
+                </div>
+              </div>
+            </div>
+          ) : null}
+
+          <ClubTagContainer
+            tags={tags}
+            onDelete={onDelete}
             updateWeight={updateWeight}
             handleSubmit={handleSubmit}
             loading={loading}

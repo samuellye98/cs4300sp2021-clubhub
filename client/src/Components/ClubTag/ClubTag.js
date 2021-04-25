@@ -1,7 +1,7 @@
 import React from 'react';
-import './autotag.css';
+import './clubtag.css';
 
-const Tag = (props) => {
+const ClubTag = (props) => {
   const { i, tag, updateWeight, deleteTag } = props;
 
   return (
@@ -32,4 +32,4 @@ const Tag = (props) => {
   );
 };
 
-export default Tag;
+export default ClubTag;
