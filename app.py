@@ -88,7 +88,7 @@ def gen_cosine_sim(query, tfidf_vectorizer=tfidf_vec_movies, tfidf_mat=tfidf_mat
     """
     query_tfidf = tfidf_vectorizer.transform([query])
     cosineSimilarities = cosine_similarity(query_tfidf, tfidf_mat).flatten()
-    sortedShows = np.argsort(-1*cosineSimilarities)[:10]
+    sortedShows = np.argsort(-1*cosineSimilarities)[:20]
 
     showRes = []
     for idx in sortedShows:
@@ -107,7 +107,12 @@ def gen_cosine_sim(query, tfidf_vectorizer=tfidf_vec_movies, tfidf_mat=tfidf_mat
         showItem['img'] = res['poster_path']
         showItem['rating'] = res['vote_average']
         showRes.append(showItem)
+
+    
+    showRes = sorted(showRes, key = lambda x: (9*x['cosine_similarity']+ 0.1*x['rating']), reverse = True)
+    
     return showRes
+
 
 
 if __name__ == "__main__":
