@@ -11,6 +11,7 @@ import requests
 import math
 import json
 import pickle
+import math
 from collections import defaultdict, Counter
 import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
@@ -68,9 +69,14 @@ def milestone1():
 def getShows():
     resp = request.json
     clubs, freeText, genre = resp['data'], resp['freeText'], resp['genre']
-    query = ' '.join([club_to_desc[c['name']] for c in clubs]) 
+    # print(type(clubs[0]['weight']))
+    
+    gcd = int(np.gcd.reduce([int(c['weight']) for c in clubs]))
+    print([club_to_desc[c['name']]*(int(c['weight'])//gcd) for c in clubs])
+    query = ' '.join([club_to_desc[c['name']]*(int(c['weight'])//gcd) for c in clubs])
     if freeText:
         query += ' ' + freeText
+    print(query)
     
     mac_memory_in_MB = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / (2**20)
     print(mac_memory_in_MB)

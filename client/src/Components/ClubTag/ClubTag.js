@@ -13,20 +13,28 @@ const ClubTag = (props) => {
         </button>
       </div>
 
-      <div className="weight-container">
+      <div className="slider-container">
+        <output
+          style={{
+            left: `calc(${Number((tag.weight * 100) / 10)}% + (${
+              8 - Number((tag.weight * 100) / 10) * 0.15
+            }px))`,
+          }}
+          className="slider-output"
+        >
+          {tag.weight}
+        </output>
         <input
-          className="weight-input"
+          className="slider-input"
+          type="range"
+          min={0}
+          max={10}
+          step={1}
           value={tag.weight}
-          type="number"
-          min="0.1"
-          max="10"
-          step="0.1"
-          onKeyDown={(evt) => evt.preventDefault()}
           onChange={(e) => {
             updateWeight(e.target.value, i);
           }}
         />
-        <span className="weight-text">Weight</span>
       </div>
     </div>
   );

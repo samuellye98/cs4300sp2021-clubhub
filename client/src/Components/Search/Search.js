@@ -40,23 +40,7 @@ const Search = () => {
   };
 
   const onAddition = (tagName) => {
-    var tag = { name: tagName };
-    if (tags.length === 0) {
-      tag['weight'] = 10;
-    } else {
-      var max = 0;
-      var idx = 0;
-      tags.forEach((t, i) => {
-        if (t.weight > max) {
-          max = t.weight;
-          idx = i;
-        }
-      });
-
-      const newTags = tags.slice(0);
-      newTags[idx].weight = max - 1;
-      tag['weight'] = 1;
-    }
+    var tag = { name: tagName, weight: 5 };
     setTags([...tags, tag]);
   };
 
@@ -73,8 +57,11 @@ const Search = () => {
         postAPI,
         JSON.stringify({
           data: tags,
-          freeText: freeTextRef.current.value.trim(),
-          genre: genreRef.current.value,
+          freeText:
+            freeTextRef.current === undefined
+              ? ''
+              : freeTextRef.current.value.trim(),
+          genre: genreRef.current === undefined ? -1 : genreRef.current.value,
         }),
         {
           headers: {
