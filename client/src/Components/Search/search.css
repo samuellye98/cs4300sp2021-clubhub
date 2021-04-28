@@ -60,7 +60,7 @@
 .advanced-search-container {
   width: 60vw;
   display: flex;
-  height: 200px;
+  height: 100%;
   box-shadow: 0 8px 20px 0 rgb(0 0 0 / 15%);
   background: #fff;
   padding: 10px 20px;

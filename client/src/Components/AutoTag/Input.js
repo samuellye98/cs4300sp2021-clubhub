@@ -1,7 +1,5 @@
 import React from 'react';
-import SearchIcon from './SearchIcon';
-import ArrowDown from './ArrowDown';
-import ArrowUp from './ArrowUp';
+
 import './autotag.css';
 
 const Input = (props) => {
@@ -16,7 +14,15 @@ const Input = (props) => {
 
   return (
     <div className="autotag-input-container">
-      <SearchIcon width={30} height={30} color="#ccc" />
+      <i
+        className="icon-search"
+        style={{
+          fontSize: '20px',
+          color: '#ccc',
+          marginLeft: 10,
+          marginRight: 15,
+        }}
+      />
       <input
         className="autotag-input"
         ref={inputRef}
@@ -26,18 +32,16 @@ const Input = (props) => {
         disabled={numTags === 5}
       />
       {showAdvanced ? (
-        <ArrowUp
-          width={30}
-          height={30}
-          color="#ccc"
-          setShowAdvanced={setShowAdvanced}
+        <i
+          className="icon-chevron-up"
+          style={{ cursor: 'pointer', fontSize: '30px', color: '#ccc' }}
+          onClick={() => setShowAdvanced(false)}
         />
       ) : (
-        <ArrowDown
-          width={30}
-          height={30}
-          color="#ccc"
-          setShowAdvanced={setShowAdvanced}
+        <i
+          className="icon-chevron-down"
+          style={{ cursor: 'pointer', fontSize: '30px', color: '#ccc' }}
+          onClick={() => setShowAdvanced(true)}
         />
       )}
     </div>

@@ -3,15 +3,6 @@
   border-radius: 34px; */
 }
 
-.icon-container {
-  width: 70px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  cursor: pointer;
-}
-
 .autotag-input-container {
   height: 50px;
   width: 60vw;

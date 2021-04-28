@@ -4,6 +4,7 @@ import env from 'react-dotenv';
 import Title from '../Title/Title';
 import AutoTag from '../AutoTag/AutoTag';
 import ClubTagContainer from '../ClubTag/ClubTagContainer';
+import MultiSelect from '../MultiSelect/MultiSelect';
 import PopcornLoading from '../PopcornLoading/PopcornLoading';
 import ShowResult from '../ShowResult/ShowResult';
 import suggestionsJson from '../../suggestions.json';
@@ -24,7 +25,7 @@ const Search = () => {
   // Advanced search
   const [showAdvanced, setShowAdvanced] = useState(false);
   const freeTextRef = useRef();
-  const genreRef = useRef();
+  const [selectedGenres, setSelectedGenres] = useState([]);
 
   // Movie Results ref
   const resultsRef = useRef();
@@ -61,7 +62,7 @@ const Search = () => {
             freeTextRef.current === undefined
               ? ''
               : freeTextRef.current.value.trim(),
-          genre: genreRef.current === undefined ? -1 : genreRef.current.value,
+          genre: selectedGenres,
         }),
         {
           headers: {
@@ -117,18 +118,12 @@ const Search = () => {
                   ></input>
                 </div>
 
-                <div className="input-select">
-                  <select ref={genreRef} name="genre" className="select">
-                    <option value={-1}>Genre</option>
-                    {genres.map((g, i) => {
-                      return (
-                        <option key={i} value={g.id}>
-                          {g.name}
-                        </option>
-                      );
-                    })}
-                  </select>
-                </div>
+                <MultiSelect
+                  options={genres}
+                  selectedValues={selectedGenres}
+                  setSelectedValues={setSelectedGenres}
+                  placeholder={'Genres'}
+                />
               </div>
             </div>
           ) : null}

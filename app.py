@@ -2,21 +2,19 @@
 from gevent import monkey
 monkey.patch_all()
 
-import os
-from flask import Flask, render_template, jsonify, request
-from flask_sqlalchemy import SQLAlchemy
-from flask_socketio import SocketIO
-from flask_cors import CORS, cross_origin
-import requests
-import math
-import json
-import pickle
-import math
-from collections import defaultdict, Counter
-import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
+import numpy as np
+from collections import defaultdict, Counter
+import pickle
+import json
+import math
+import requests
+from flask_cors import CORS, cross_origin
+from flask_socketio import SocketIO
+from flask_sqlalchemy import SQLAlchemy
+from flask import Flask, render_template, jsonify, request
+import os
 
-# from api import api as api
 
 # Configure app
 socketio = SocketIO()
@@ -30,9 +28,6 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 
 # DB
 db = SQLAlchemy(app)
-
-# Import + Register Blueprints
-# app.register_blueprint(api)
 
 # Initialize app w/SocketIO
 socketio.init_app(app)
@@ -48,9 +43,10 @@ tfidf_mat_movies = pickle.load(open("api/bin_files/tfidf_mat_movies.bin", "rb"))
 index_to_movieid = pickle.load(open("api/bin_files/index_to_movieid.bin", "rb"))
 club_to_desc = pickle.load(open("api/bin_files/club_to_desc.bin", "rb"))
 
-import resource
-mac_memory_in_MB = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / (2**20)
-print(mac_memory_in_MB)
+# import resource
+# mac_memory_in_MB = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / (2**20)
+# print(mac_memory_in_MB)
+
 
 @app.route('/')
 def root():
@@ -63,24 +59,22 @@ def milestone1():
                     "net_id": "Cora Wu (cjw322), Jonathan Gao (jg992), Josiah Kek (jrk322), Rishabh Sarup (rs868), Samuel Lye (sl2982)"})
 
 
-
 @app.route('/getShows', methods=['POST'])
 @cross_origin()
 def getShows():
     resp = request.json
-    clubs, freeText, genre = resp['data'], resp['freeText'], resp['genre']
-    # print(type(clubs[0]['weight']))
+    clubs, freeText, genres = resp['data'], resp['freeText'], resp['genre']
     
     gcd = int(np.gcd.reduce([int(c['weight']) for c in clubs]))
-    print([club_to_desc[c['name']]*(int(c['weight'])//gcd) for c in clubs])
+    # print([club_to_desc[c['name']]*(int(c['weight'])//gcd) for c in clubs])
     query = ' '.join([club_to_desc[c['name']]*(int(c['weight'])//gcd) for c in clubs])
     if freeText:
         query += ' ' + freeText
-    print(query)
-    
-    mac_memory_in_MB = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / (2**20)
-    print(mac_memory_in_MB)
-    
+    # print(query)
+
+    # mac_memory_in_MB = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / (2**20)
+    # print(mac_memory_in_MB)
+
     return json.dumps(gen_cosine_sim(query))
 
 
@@ -114,11 +108,9 @@ def gen_cosine_sim(query, tfidf_vectorizer=tfidf_vec_movies, tfidf_mat=tfidf_mat
         showItem['rating'] = res['vote_average']
         showRes.append(showItem)
 
-    
-    showRes = sorted(showRes, key = lambda x: (9*x['cosine_similarity']+ 0.1*x['rating']), reverse = True)
-    
-    return showRes[:10]
+    showRes = sorted(showRes, key=lambda x: (9*x['cosine_similarity'] + 0.1*x['rating']), reverse=True)
 
+    return showRes[:20]
 
 
 if __name__ == "__main__":

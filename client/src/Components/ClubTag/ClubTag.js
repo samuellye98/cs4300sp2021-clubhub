@@ -9,7 +9,10 @@ const ClubTag = (props) => {
       <div className="tag">
         <span className="tag-name">{tag.name}</span>
         <button type="button" className="cancel-button" onClick={deleteTag}>
-          &#x2715;
+          <i
+            className="icon-clear"
+            style={{ fontSize: '15px', color: '#fff' }}
+          />
         </button>
       </div>
 
