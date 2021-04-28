@@ -8,7 +8,9 @@
 .search-hero-image {
   background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
     url('../../assets/images/aesthetic-movie-theatre.jpeg');
-  height: 100vh;
+  min-height: 100vh;
+  height: 100%;
+  padding: 50px 0px;
   width: 100%;
   background-position: center;
   background-repeat: no-repeat;
