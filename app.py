@@ -50,6 +50,10 @@ inv_idx = pickle.load(open("api/bin_files/inv_idx.bin", "rb"))
 with open("./api/bin_files/club_to_desc.json") as f:
     club_to_desc = json.load(f)
 
+with open("./api/bin_files/club_to_neighbors.json") as f:
+    club_to_neighbors = json.load(f)
+
+
 @app.route('/')
 def root():
     return app.send_static_file('index.html')
