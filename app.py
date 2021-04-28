@@ -111,7 +111,7 @@ def gen_cosine_sim(query, tfidf_vectorizer=tfidf_vec_movies, tfidf_mat=tfidf_mat
     
     showRes = sorted(showRes, key = lambda x: (9*x['cosine_similarity']+ 0.1*x['rating']), reverse = True)
     
-    return showRes
+    return showRes[:10]
 
 
 
