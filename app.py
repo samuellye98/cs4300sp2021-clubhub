@@ -47,6 +47,10 @@ club_to_desc = pickle.load(open("api/bin_files/club_to_desc.bin", "rb"))
 # mac_memory_in_MB = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / (2**20)
 # print(mac_memory_in_MB)
 
+with open("./api/bin_files/knn_names.json") as f:
+    knn_names = json.load(f)
+vectorizer = pickle.load(open("api/bin_files/knn_vectorizer.pickle", "rb"))
+knn = pickle.load(open("api/bin_files/knn_model.pkl", "rb"))
 
 @app.route('/')
 def root():
@@ -70,7 +74,7 @@ def getShows():
     query = ' '.join([club_to_desc[c['name']]*(int(c['weight'])//gcd) for c in clubs])
     if freeText:
         query += ' ' + freeText
-    # print(query)
+    neighbor_query = getNeighborQuery(clubs, query)
 
     # mac_memory_in_MB = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / (2**20)
     # print(mac_memory_in_MB)
@@ -111,6 +115,26 @@ def gen_cosine_sim(query, tfidf_vectorizer=tfidf_vec_movies, tfidf_mat=tfidf_mat
     showRes = sorted(showRes, key=lambda x: (9*x['cosine_similarity'] + 0.1*x['rating']), reverse=True)
 
     return showRes[:20]
+
+
+def getNeighborQuery(clubs, query):
+    """
+    Returns a list of names for <=5 potential neighboring clubs to the query
+    """
+    query_clubs = [club['name'] for club in clubs]
+    print("Clubs: \n", query_clubs)
+    print("Query: \n", query)
+    query_vec = vectorizer.transform([query])
+    club_neighbors = knn.kneighbors(query_vec.reshape(1, -1), n_neighbors = 10, return_distance=False)[0]
+
+    neighbor_lst = []
+    for neighbor_idx in club_neighbors:
+        neighbor = knn_names[str(neighbor_idx)]
+        if neighbor not in query_clubs:
+            neighbor_lst += [neighbor]
+
+    neighbor_query = ' '.join([club_to_desc[n] for n in neighbors])
+    return neighbor_query
 
 
 if __name__ == "__main__":
