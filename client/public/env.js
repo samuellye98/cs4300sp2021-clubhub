@@ -42,11 +42,7 @@ window.env = {
   "npm_config_local_address": "",
   "npm_config_git_tag_version": "true",
   "npm_config_cert": "",
-<<<<<<< HEAD
   "TERM_SESSION_ID": "D72CC6F7-CA60-4370-9AE1-8720B8979C50",
-=======
-  "TERM_SESSION_ID": "D66F147B-C61B-4EB8-B812-65C66F361739",
->>>>>>> master
   "npm_config_registry": "https://registry.npmjs.org/",
   "npm_config_noproxy": "",
   "npm_config_fetch_retries": "2",
@@ -87,11 +83,7 @@ window.env = {
   "npm_config_json": "",
   "npm_config_access": "",
   "npm_config_argv": "{\"remain\":[],\"cooked\":[\"run\",\"build\"],\"original\":[\"run\",\"build\"]}",
-<<<<<<< HEAD
   "PATH": "/usr/local/lib/node_modules/npm/node_modules/npm-lifecycle/node-gyp-bin:/Users/samuellye98/Documents/Cornell/7. Spring 2021/CS 4300_Language and Information/Project/cs4300sp2021-clubhub/client/node_modules/.bin:/Users/samuellye98/opt/anaconda3/envs/clubhub/bin:/Users/samuellye98/opt/anaconda3/condabin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin:/Users/samuellye98/opt/apache-maven-3.6.3/bin:/opt/homebrew/bin:/Users/samuellye98/Library/Android/sdk/platform-tools:/Users/samuellye98/Library/Android/sdk/tools",
-=======
-  "PATH": "/usr/local/lib/node_modules/npm/node_modules/npm-lifecycle/node-gyp-bin:/Users/samuellye98/Documents/Cornell/7. Spring 2021/CS 4300_Language and Information/Project/cs4300sp2021-clubhub/client/node_modules/.bin:/Users/samuellye98/opt/anaconda3/envs/clubhub/bin:/Users/samuellye98/opt/anaconda3/bin:/Users/samuellye98/opt/anaconda3/condabin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin:/Users/samuellye98/opt/apache-maven-3.6.3/bin:/opt/homebrew/bin:/Users/samuellye98/Library/Android/sdk/platform-tools:/Users/samuellye98/Library/Android/sdk/tools",
->>>>>>> master
   "npm_config_allow_same_version": "",
   "npm_config_https_proxy": "",
   "npm_config_engine_strict": "",
@@ -202,5 +194,5 @@ window.env = {
   "SEARCH_API_DEV": "http://localhost:5000/milestone1",
   "SEARCH_API_PRODUCTION": "https://clubhub-4300.herokuapp.com/milestone1",
   "POST_API_DEV": "http://localhost:5000/getShows",
-  "POST_API_PRODUCTION": "https://clubhub-4300.herokuapp.com/getShows"
+  "POST_API_PRODUCTION": "https://test-clubhub-4300.herokuapp.com/getShows"
 };
