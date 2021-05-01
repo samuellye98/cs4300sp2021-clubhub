@@ -52,6 +52,10 @@ with open("./api/bin_files/knn_names.json") as f:
 vectorizer = pickle.load(open("api/bin_files/knn_vectorizer.pickle", "rb"))
 knn = pickle.load(open("api/bin_files/knn_model.pkl", "rb"))
 
+with open("./api/bin_files/club_to_neighbors.json") as f:
+    club_to_neighbors = json.load(f)
+
+
 @app.route('/')
 def root():
     return app.send_static_file('index.html')
