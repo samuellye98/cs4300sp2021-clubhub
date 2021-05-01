@@ -74,7 +74,6 @@ const Search = () => {
         }
       )
       .then((res) => {
-        console.log(res.data);
         setShows(res.data.results);
         setSuggestions(res.data.suggestions);
         setLoading(false);
@@ -93,12 +92,14 @@ const Search = () => {
 
   return (
     <section id="search">
+      <div className="prototype">
+        <a target="_blank" href="https://test-clubhub-4300.herokuapp.com/">
+          First prototype
+        </a>
+      </div>
       <div className="search-hero-image">
         <div className="hero-content">
           <Title />
-          {/* <div className="search-title">
-            <span>What are you looking for?</span>
-          </div> */}
           <AutoTag
             tags={tags}
             suggestions={suggestionsJson['suggestions']}

@@ -29,3 +29,7 @@
 .suggestion-txt {
   font-size: 0.75rem;
 }
+
+.suggestion-txt a {
+  color: rgb(88, 88, 172);
+}

@@ -156,8 +156,6 @@ def getNeighborQuery(clubs, query):
     Returns a list of names for <=5 potential neighboring clubs to the query
     """
     query_clubs = [club['name'] for club in clubs]
-    print("Clubs: \n", query_clubs)
-    print("Query: \n", query)
     query_vec = vectorizer.transform([query])
     club_neighbors = knn.kneighbors(query_vec.reshape(1, -1), n_neighbors = 10, return_distance=False)[0]
 
