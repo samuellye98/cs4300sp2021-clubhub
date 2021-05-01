@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-// import 'bootstrap/dist/css/bootstrap.min.css';
+import './icomoon.css';
 import Search from './Components/Search/Search';
 import reportWebVitals from './reportWebVitals';
 

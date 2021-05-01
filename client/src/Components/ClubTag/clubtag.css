@@ -1,0 +1,102 @@
+.clubtag-container {
+  display: flex;
+  flex-direction: column;
+  width: 60vw;
+  margin-top: 10px;
+  padding: 10px 20px;
+  background: rgba(0, 0, 0, 0.8);
+}
+
+/** ClubTag */
+
+.tag-container {
+  height: 40px;
+  width: 100%;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tag {
+  height: 100%;
+  width: 50%;
+  border-radius: 30px;
+  padding: 0px 10px;
+  background: #d25502;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tag-name {
+  color: white;
+  font-size: 12px;
+}
+
+/** Cancel */
+
+.cancel-button {
+  margin-left: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  border: 0;
+  background-color: transparent;
+}
+
+.cancel-button:focus {
+  outline: none;
+}
+
+/** Weights */
+
+.slider-container {
+  height: 50px;
+  justify-content: center;
+  display: flex;
+  position: relative;
+  align-items: flex-end;
+}
+
+.slider-input:focus {
+  outline: none;
+}
+.slider-output {
+  color: #d25502;
+  border-radius: 4px;
+  position: absolute;
+  left: calc(100% + -7px);
+  transform: translateX(-50%);
+  bottom: 15px;
+}
+
+/** Submit Button */
+
+.submit-btn-container {
+  margin-top: 15px;
+  display: flex;
+  justify-content: center;
+}
+
+.submit-btn {
+  background-color: #d25502;
+  color: white;
+  font-weight: bold;
+  border: 0;
+  height: 45px;
+  padding: 15px;
+  border-radius: 25px;
+  cursor: pointer;
+}
+
+.submit-btn:hover {
+  background-color: #fc6b0b;
+}
+
+.submit-btn:focus {
+  outline: none;
+}

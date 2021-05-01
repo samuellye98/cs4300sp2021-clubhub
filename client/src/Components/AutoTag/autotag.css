@@ -1,17 +1,6 @@
 .autotag-container {
-  /* display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center; */
-}
-
-.search-icon-container {
-  width: 70px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  cursor: pointer;
+  /* background: rgba(0, 0, 0, 0.8);
+  border-radius: 34px; */
 }
 
 .autotag-input-container {
@@ -23,7 +12,8 @@
   align-items: center;
 
   background: #fff;
-  border-radius: 34px;
+  border-radius: 3px;
+  box-shadow: 0 8px 20px 0 rgb(0 0 0 / 15%);
   padding: 10px 20px;
 }
 
@@ -45,6 +35,7 @@
 .autotag-suggestions {
   position: absolute;
   margin-left: 75px;
+  z-index: 99;
 }
 
 .autotag-suggestions ul {
@@ -83,108 +74,4 @@
 .autotag-suggestions li.is-disabled {
   opacity: 0.5;
   cursor: auto;
-}
-
-/** Results */
-
-.results-container {
-  display: flex;
-  flex-direction: column;
-  margin-top: 15px;
-  padding: 10px 20px;
-  background: rgba(0, 0, 0, 0.8);
-}
-
-.tag-container {
-  height: 40px;
-  width: 100%;
-  margin-bottom: 10px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.tag {
-  height: 100%;
-  width: 50%;
-  border-radius: 30px;
-  padding: 0px 10px;
-  background: #d25502;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.tag-name {
-  color: white;
-  font-size: 12px;
-}
-
-.cancel-button {
-  margin-left: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  border: 0;
-  background-color: transparent;
-}
-
-.cancel-button:focus {
-  outline: none;
-}
-
-.weight-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  height: 100%;
-  width: 10%;
-}
-
-.weight-input {
-  border: 0;
-  border-bottom: 1px solid white;
-  background-color: transparent;
-  color: white;
-  text-align: right;
-}
-
-.weight-text {
-  color: white;
-  font-size: 8px;
-  text-align: right;
-}
-
-input[type='number']::-webkit-inner-spin-button,
-input[type='number']::-webkit-outer-spin-button {
-  margin-left: 5px;
-  opacity: 1;
-}
-
-.submit-btn-container {
-  margin-top: 15px;
-  display: flex;
-  justify-content: center;
-}
-
-.submit-btn {
-  background-color: #d25502;
-  color: white;
-  font-weight: bold;
-  border: 0;
-  height: 45px;
-  padding: 15px;
-  border-radius: 25px;
-  cursor: pointer;
-}
-
-.submit-btn:hover {
-  background-color: #fc6b0b;
-}
-
-.submit-btn:focus {
-  outline: none;
 }

@@ -1,0 +1,31 @@
+.suggestion-card {
+  border-radius: 25px;
+  background-color: rgba(0, 0, 0, 0.85);
+  color: white;
+  display: inline-block;
+  margin: 1% 1%;
+  transition: all 0.3s ease-in-out;
+  width: 100%;
+}
+
+.suggestion-content {
+  padding: 0.5% 3% 2%;
+}
+
+.suggestion-title {
+  color: #d25502;
+  border-radius: 25px;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  padding: 0.5% 0.7% 0;
+  margin: 15px 0px 15px 0px;
+}
+
+.suggestion-rating {
+  text-align: center;
+}
+
+.suggestion-txt {
+  font-size: 0.75rem;
+}

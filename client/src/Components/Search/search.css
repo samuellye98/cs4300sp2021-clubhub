@@ -8,7 +8,9 @@
 .search-hero-image {
   background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
     url('../../assets/images/aesthetic-movie-theatre.jpeg');
-  height: 100vh;
+  min-height: 100vh;
+  height: 100%;
+  padding: 50px 0px;
   width: 100%;
   background-position: center;
   background-repeat: no-repeat;
@@ -32,6 +34,8 @@
   margin-bottom: 60px;
 } */
 
+/** Movie Results */
+
 #results {
   padding: 2% 0;
   text-align: center;
@@ -40,4 +44,107 @@
   flex-direction: row;
   flex-wrap: wrap;
   /* background-color:rgb(25, 29, 61); */
+}
+
+/** Advanced Search */
+
+@keyframes fadeInDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.advanced-search-container {
+  width: 60vw;
+  display: flex;
+  height: 100%;
+  box-shadow: 0 8px 20px 0 rgb(0 0 0 / 15%);
+  background: #fff;
+  padding: 10px 20px;
+  border-radius: 3px;
+  margin-top: 15px;
+}
+
+.advanced-search {
+  width: 100%;
+  padding: 20px 20px;
+}
+
+.advanced-search-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #555;
+  display: block;
+  margin-bottom: 15px;
+}
+
+.input-group {
+  position: relative;
+  border-bottom: 2px solid #ccc;
+  margin-bottom: 34px;
+}
+
+.free-form-input {
+  font-size: 14px;
+  padding: 11px 0;
+  color: #999;
+
+  outline: none;
+  margin: 0;
+  border: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  width: 100%;
+  font-family: inherit;
+}
+
+.input-select {
+  height: 40px;
+}
+
+.select {
+  cursor: pointer;
+  outline: none;
+  background: 0 0;
+  border-radius: 0;
+  border: 0;
+  border-bottom: 2px solid #ccc;
+  height: 100%;
+  color: #888;
+  display: flex;
+  align-items: center;
+  padding: 0;
+  padding-right: 30px;
+  font-size: 14px;
+}
+
+#suggestions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  width: 60%;
+  margin: 2% auto;
+  text-align: center;
+}
+.suggestions-title {
+  background-color: #d25502;
+  border-radius: 50px;
+  color: white;
+  margin: 2% auto 3%;
+  text-align: center;
+  width: 100%;
+}
+
+.suggestions-title h2 {
+  font-size: 2.5rem;
+  font-weight: normal;
+  padding: 0.2% 2%;
+  margin: 0;
 }

@@ -3,9 +3,13 @@ import axios from 'axios';
 import env from 'react-dotenv';
 import Title from '../Title/Title';
 import AutoTag from '../AutoTag/AutoTag';
+import ClubTagContainer from '../ClubTag/ClubTagContainer';
+import MultiSelect from '../MultiSelect/MultiSelect';
 import PopcornLoading from '../PopcornLoading/PopcornLoading';
 import ShowResult from '../ShowResult/ShowResult';
+import ShowSuggestions from '../ShowSuggestions/ShowSuggestions';
 import suggestionsJson from '../../suggestions.json';
+import { genres } from '../../constants.js';
 import './search.css';
 
 const postAPI =
@@ -14,9 +18,18 @@ const postAPI =
     : env.POST_API_DEV;
 
 const Search = () => {
+  // Regular search
   const [tags, setTags] = useState([]);
   const [shows, setShows] = useState([]);
+  const [suggestions, setSuggestions] = useState([]);
   const [loading, setLoading] = useState(false);
+
+  // Advanced search
+  const [showAdvanced, setShowAdvanced] = useState(false);
+  const freeTextRef = useRef();
+  const [selectedGenres, setSelectedGenres] = useState([]);
+
+  // Movie Results ref
   const resultsRef = useRef();
 
   useEffect(() => {
@@ -30,23 +43,7 @@ const Search = () => {
   };
 
   const onAddition = (tagName) => {
-    var tag = { name: tagName };
-    if (tags.length === 0) {
-      tag['weight'] = 10;
-    } else {
-      var max = 0;
-      var idx = 0;
-      tags.forEach((t, i) => {
-        if (t.weight > max) {
-          max = t.weight;
-          idx = i;
-        }
-      });
-
-      const newTags = tags.slice(0);
-      newTags[idx].weight = max - 1;
-      tag['weight'] = 1;
-    }
+    var tag = { name: tagName, weight: 5 };
     setTags([...tags, tag]);
   };
 
@@ -59,15 +56,27 @@ const Search = () => {
   const handleSubmit = () => {
     setLoading(true);
     axios
-      .post(postAPI, JSON.stringify({ data: tags }), {
-        headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
-        },
-      })
+      .post(
+        postAPI,
+        JSON.stringify({
+          data: tags,
+          freeText:
+            freeTextRef.current === undefined
+              ? ''
+              : freeTextRef.current.value.trim(),
+          genre: selectedGenres,
+        }),
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+          },
+        }
+      )
       .then((res) => {
         console.log(res.data);
-        setShows(res.data);
+        setShows(res.data.results);
+        setSuggestions(res.data.suggestions);
         setLoading(false);
       })
       .catch((e) => setLoading(false));
@@ -93,8 +102,38 @@ const Search = () => {
           <AutoTag
             tags={tags}
             suggestions={suggestionsJson['suggestions']}
-            onDelete={onDelete}
             onAddition={onAddition}
+            showAdvanced={showAdvanced}
+            setShowAdvanced={setShowAdvanced}
+          />
+
+          {showAdvanced ? (
+            <div className="advanced-search-container">
+              <div className="advanced-search">
+                <span className="advanced-search-title">Advanced Search</span>
+                <div className="input-group">
+                  <input
+                    ref={freeTextRef}
+                    className="free-form-input"
+                    type="text"
+                    name="freeforminput"
+                    placeholder="Free form input"
+                  ></input>
+                </div>
+
+                <MultiSelect
+                  options={genres}
+                  selectedValues={selectedGenres}
+                  setSelectedValues={setSelectedGenres}
+                  placeholder={'Genres'}
+                />
+              </div>
+            </div>
+          ) : null}
+
+          <ClubTagContainer
+            tags={tags}
+            onDelete={onDelete}
             updateWeight={updateWeight}
             handleSubmit={handleSubmit}
             loading={loading}
@@ -108,6 +147,19 @@ const Search = () => {
           <div id="results">
             {shows.map((m, i) => (
               <ShowResult key={i} movie={m} />
+            ))}
+          </div>
+        ) : null}
+      </div>
+
+      <div>
+        {suggestions.length > 0 && !loading ? (
+          <div id="suggestions">
+            <div className="suggestions-title">
+              <h2>Suggestions for Similar Clubs</h2>
+            </div>
+            {suggestions.map((m, i) => (
+              <ShowSuggestions key={i} movie={m} />
             ))}
           </div>
         ) : null}
