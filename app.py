@@ -69,20 +69,31 @@ def getShows():
     resp = request.json
     clubs, freeText, genres = resp['data'], resp['freeText'], resp['genre']
     
+    genreSet = set([g['id'] for g in genres])
     gcd = int(np.gcd.reduce([int(c['weight']) for c in clubs]))
-    # print([club_to_desc[c['name']]*(int(c['weight'])//gcd) for c in clubs])
     query = ' '.join([club_to_desc[c['name']]*(int(c['weight'])//gcd) for c in clubs])
     if freeText:
         query += ' ' + freeText
     neighbor_query = getNeighborQuery(clubs, query)
 
-    # mac_memory_in_MB = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / (2**20)
-    # print(mac_memory_in_MB)
+    # Run cosine similarity to get results and suggestions
+    res = gen_cosine_sim(query, 10, genreSet)
+    all_suggestions = gen_cosine_sim(neighbor_query, 15)
+    
+    resSet = set([r['id'] for r in res])
+    cut_suggestions = []
+    for s in all_suggestions:
+        if s['id'] not in resSet:
+            cut_suggestions.append(s)
+        if len(cut_suggestions) == 5:
+            break
 
-    return json.dumps(gen_cosine_sim(query))
+    return json.dumps({
+        "results": res, "suggestions": cut_suggestions
+        })
 
 
-def gen_cosine_sim(query, tfidf_vectorizer=tfidf_vec_movies, tfidf_mat=tfidf_mat_movies):
+def gen_cosine_sim(query, max_count, genreSet=[], tfidf_vectorizer=tfidf_vec_movies, tfidf_mat=tfidf_mat_movies):
     """
     query: query string
     tfidf_vectorizer: TfIdfVectorizer model
@@ -92,29 +103,48 @@ def gen_cosine_sim(query, tfidf_vectorizer=tfidf_vec_movies, tfidf_mat=tfidf_mat
     """
     query_tfidf = tfidf_vectorizer.transform([query])
     cosineSimilarities = cosine_similarity(query_tfidf, tfidf_mat).flatten()
-    sortedShows = np.argsort(-1*cosineSimilarities)[:20]
+    sortedShows = np.argsort(-1*cosineSimilarities)
 
-    showRes = []
+    count, showRes = 0, []
     for idx in sortedShows:
-        showId = index_to_movieid[idx]
-        queryUrl = 'https://api.themoviedb.org/3/movie/' + str(
-            showId) + '?api_key=06f6526774c6bdba14bded4a2244fe36&language=en-US'
-        resp = requests.get(queryUrl)
-        res = resp.json()
-        showItem = {}
-        showItem['id'] = showId
-        showItem['cosine_similarity'] = cosineSimilarities[idx]
-        showItem['runtime'] = res['runtime']
-        showItem['genres'] = res['genres']
-        showItem['name'] = res['title']
-        showItem['description'] = res['overview']
-        showItem['img'] = res['poster_path']
-        showItem['rating'] = res['vote_average']
-        showRes.append(showItem)
-
+        if count < max_count:
+            showId = index_to_movieid[idx]
+            queryUrl = 'https://api.themoviedb.org/3/movie/' + str(
+                showId) + '?api_key=06f6526774c6bdba14bded4a2244fe36&language=en-US'
+            resp = requests.get(queryUrl)
+            res = resp.json()
+            showItem = {}
+            genres = res['genres']
+            if len(genreSet) == 0:
+                showItem['genres'] = genres
+                showItem['id'] = showId
+                showItem['cosine_similarity'] = cosineSimilarities[idx]
+                showItem['runtime'] = res['runtime']
+                showItem['name'] = res['title']
+                showItem['description'] = res['overview']
+                showItem['img'] = res['poster_path']
+                showItem['rating'] = res['vote_average']
+                showRes.append(showItem)
+                count += 1
+            else:
+                for g in genres:
+                    if g['id'] in genreSet: # check if movie is in selected genre
+                        showItem['genres'] = genres
+                        showItem['id'] = showId
+                        showItem['cosine_similarity'] = cosineSimilarities[idx]
+                        showItem['runtime'] = res['runtime']
+                        showItem['name'] = res['title']
+                        showItem['description'] = res['overview']
+                        showItem['img'] = res['poster_path']
+                        showItem['rating'] = res['vote_average']
+                        showRes.append(showItem)
+                        count += 1
+                        break
+        else:
+            break
+                
     showRes = sorted(showRes, key=lambda x: (9*x['cosine_similarity'] + 0.1*x['rating']), reverse=True)
-
-    return showRes[:20]
+    return showRes
 
 
 def getNeighborQuery(clubs, query):
@@ -133,7 +163,7 @@ def getNeighborQuery(clubs, query):
         if neighbor not in query_clubs:
             neighbor_lst += [neighbor]
 
-    neighbor_query = ' '.join([club_to_desc[n] for n in neighbors])
+    neighbor_query = ' '.join([club_to_desc[n] for n in neighbor_lst])
     return neighbor_query
 
 

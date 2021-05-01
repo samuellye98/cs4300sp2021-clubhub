@@ -7,6 +7,7 @@ import ClubTagContainer from '../ClubTag/ClubTagContainer';
 import MultiSelect from '../MultiSelect/MultiSelect';
 import PopcornLoading from '../PopcornLoading/PopcornLoading';
 import ShowResult from '../ShowResult/ShowResult';
+import ShowSuggestions from '../ShowSuggestions/ShowSuggestions';
 import suggestionsJson from '../../suggestions.json';
 import { genres } from '../../constants.js';
 import './search.css';
@@ -20,6 +21,7 @@ const Search = () => {
   // Regular search
   const [tags, setTags] = useState([]);
   const [shows, setShows] = useState([]);
+  const [suggestions, setSuggestions] = useState([]);
   const [loading, setLoading] = useState(false);
 
   // Advanced search
@@ -73,7 +75,8 @@ const Search = () => {
       )
       .then((res) => {
         console.log(res.data);
-        setShows(res.data);
+        setShows(res.data.results);
+        setSuggestions(res.data.suggestions);
         setLoading(false);
       })
       .catch((e) => setLoading(false));
@@ -144,6 +147,19 @@ const Search = () => {
           <div id="results">
             {shows.map((m, i) => (
               <ShowResult key={i} movie={m} />
+            ))}
+          </div>
+        ) : null}
+      </div>
+
+      <div>
+        {suggestions.length > 0 && !loading ? (
+          <div id="suggestions">
+            <div className="suggestions-title">
+              <h2>Suggestions for Similar Clubs</h2>
+            </div>
+            {suggestions.map((m, i) => (
+              <ShowSuggestions key={i} movie={m} />
             ))}
           </div>
         ) : null}
