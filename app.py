@@ -106,6 +106,7 @@ def gen_cosine_sim(query, max_count, genreSet=[], tfidf_vectorizer=tfidf_vec_mov
     return: cosine similarity between query and all docs
     """
     query_tfidf = tfidf_vectorizer.transform([query])
+    features = query_tfidf.get_feature_names()
     cosineSimilarities = cosine_similarity(query_tfidf, tfidf_mat).flatten()
     sortedShows = np.argsort(-1*cosineSimilarities)
 
@@ -148,7 +149,7 @@ def gen_cosine_sim(query, max_count, genreSet=[], tfidf_vectorizer=tfidf_vec_mov
             break
                 
     showRes = sorted(showRes, key=lambda x: (9*x['cosine_similarity'] + 0.1*x['rating']), reverse=True)
-    return showRes
+    return showRes, features
 
 
 def getNeighborQuery(clubs, query):
