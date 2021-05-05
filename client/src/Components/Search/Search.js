@@ -84,6 +84,14 @@ const Search = () => {
 
   return (
     <section id="search">
+      <div className="prototype">
+        <a target="_blank" href="https://clubhub-4300.herokuapp.com/">
+          Final prototype
+        </a>
+        <a target="_blank" href="https://clubhub-4300-snd.herokuapp.com/">
+          Second prototype
+        </a>
+      </div>
       <div className="search-hero-image">
         <div className="hero-content">
           <Title />
