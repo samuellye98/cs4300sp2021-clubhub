@@ -81,8 +81,8 @@ def getShows():
     neighbor_query = getNeighborQuery(clubs, query)
 
     # Run cosine similarity to get results and suggestions
-    res = gen_cosine_sim(query, 10, genreSet)
-    all_suggestions = gen_cosine_sim(neighbor_query, 15)
+    res, features= gen_cosine_sim(query, 10, genreSet)
+    all_suggestions, features= gen_cosine_sim(neighbor_query, 15)
     
     resSet = set([r['id'] for r in res])
     cut_suggestions = []
@@ -93,7 +93,7 @@ def getShows():
             break
 
     return json.dumps({
-        "results": res, "suggestions": cut_suggestions
+        "results": res, "suggestions": cut_suggestions, "key_features": features
         })
 
 
