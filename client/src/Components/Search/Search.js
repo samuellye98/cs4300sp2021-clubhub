@@ -118,7 +118,7 @@ const Search = () => {
                     className="free-form-input"
                     type="text"
                     name="freeforminput"
-                    placeholder="Free form input"
+                    placeholder="Free form input (Enter additional search keywords or sentences here"
                   ></input>
                 </div>
 
