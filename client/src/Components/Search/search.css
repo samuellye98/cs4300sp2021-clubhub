@@ -146,6 +146,19 @@
   font-size: 14px;
 }
 
+#stemmed-words-div {
+  margin: 4% auto 2%;
+  text-align: center;
+}
+
+.suggestions-divider {
+  border: none;
+  width: 75%;
+  background-color: black;
+  height: 5px;
+  margin-top: 5%;
+}
+
 #suggestions {
   display: flex;
   flex-direction: column;
@@ -159,9 +172,9 @@
   background-color: #d25502;
   border-radius: 50px;
   color: white;
-  margin: 2% auto 3%;
+  margin: 4% auto 3%;
   text-align: center;
-  width: 100%;
+  width: 60%;
 }
 
 .suggestions-title h2 {
@@ -171,7 +184,13 @@
   margin: 0;
 }
 
-.neighbors  {
+.neighbors-div { 
+  margin: 0 auto 2%; 
+  width: 50%;
+  text-align: center;
+}
+
+.items  {
   border: solid rgba(0, 0, 0, 0.85) 2px;
   color: rgba(0, 0, 0, 0.85);
   border-radius: 25px;

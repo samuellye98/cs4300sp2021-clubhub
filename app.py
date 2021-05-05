@@ -111,7 +111,6 @@ def gen_cosine_sim(query, max_count, genreSet=[], tfidf_vectorizer=tfidf_vec_mov
     """
     query_tfidf = tfidf_vectorizer.transform([query])
     features_set = set(tfidf_vectorizer.get_feature_names())
-    print(set(query.split(' ')))
     features = list(features_set.intersection(set(query.split(' '))))[:10]
     cosineSimilarities = cosine_similarity(query_tfidf, tfidf_mat).flatten()
     sortedShows = np.argsort(-1*cosineSimilarities)
@@ -172,6 +171,7 @@ def getNeighborQuery(clubs, query):
         if neighbor not in query_clubs:
             neighbor_lst += [neighbor]
 
+    neighbor_lst = neighbor_lst[:5]
     neighbor_query = ' '.join([club_to_desc[n] for n in neighbor_lst])
     return neighbor_lst, neighbor_query
 

@@ -152,33 +152,44 @@ const Search = () => {
       {loading ? <PopcornLoading /> : null}
       <div ref={resultsRef}>
         {shows.length > 0 && !loading ? (
-          <div id="results">
-            <h4>Important Stemmed Words that Led to Your Result</h4>
-            {features.map(f => (
-              <p> {f} </p>
-            ))}
-            {shows.map((m, i) => (
-              <ShowResult key={i} movie={m} />
-            ))}
+          <div>
+            <div className="suggestions-title">
+              <h2>Movie Suggestions</h2>
+            </div>
+            <div id="stemmed-words-div">
+              <h4>Important Stemmed Words that Led to Your Results</h4>
+              {features.map(f => (
+                <p className="items"> {f} </p>
+              ))}
+            </div>
+            <div id="results">
+              {shows.map((m, i) => (
+                <ShowResult key={i} movie={m} />
+              ))}
+            </div>
           </div>
         ) : null}
       </div>
 
+      <hr className="suggestions-divider" />
+
       <div>
         {suggestions.length > 0 && !loading ? (
-          <div id="suggestions">
+          <div>
             <div className="suggestions-title">
               <h2>Movie Suggestions for Similar Clubs</h2>
             </div>
-            <div>
+            <div className="neighbors-div">
               <h4>Similar Clubs</h4>
               {neighbors.map(m => (
-                <p className="neighbors">{m}</p>
+                <p className="items">{m}</p>
               ))}
             </div>
-            {suggestions.map((m, i) => (
-              <ShowSuggestions key={i} movie={m} />
-            ))}
+            <div id="suggestions">
+              {suggestions.map((m, i) => (
+                <ShowSuggestions key={i} movie={m} />
+              ))}
+            </div>
           </div>
         ) : null}
       </div>
