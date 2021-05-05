@@ -22,6 +22,8 @@ const Search = () => {
   const [tags, setTags] = useState([]);
   const [shows, setShows] = useState([]);
   const [suggestions, setSuggestions] = useState([]);
+  const [neighbors, setNeighbors] = useState([]);
+  const [features, setFeatures] = useState([]);
   const [loading, setLoading] = useState(false);
 
   // Advanced search
@@ -76,6 +78,8 @@ const Search = () => {
       .then((res) => {
         setShows(res.data.results);
         setSuggestions(res.data.suggestions);
+        setNeighbors(res.data.neighbors);
+        setFeatures(res.data.key_features);
         setLoading(false);
       })
       .catch((e) => setLoading(false));
@@ -93,7 +97,10 @@ const Search = () => {
   return (
     <section id="search">
       <div className="prototype">
-        <a target="_blank" href="https://test-clubhub-4300.herokuapp.com/">
+        <a target="_blank" href="https://clubhub-4300-snd.herokuapp.com/">
+          Second prototype
+        </a>
+        <a target="_blank" href="https://clubhub-4300-fst.herokuapp.com/">
           First prototype
         </a>
       </div>
@@ -118,7 +125,7 @@ const Search = () => {
                     className="free-form-input"
                     type="text"
                     name="freeforminput"
-                    placeholder="Free form input"
+                    placeholder="Keyword Search (Enter additional search keywords or sentences here)"
                   ></input>
                 </div>
 
@@ -145,26 +152,48 @@ const Search = () => {
       {loading ? <PopcornLoading /> : null}
       <div ref={resultsRef}>
         {shows.length > 0 && !loading ? (
-          <div id="results">
-            {shows.map((m, i) => (
-              <ShowResult key={i} movie={m} />
-            ))}
+          <div>
+            <div className="suggestions-title">
+              <h2>Movie Suggestions</h2>
+            </div>
+            <div id="stemmed-words-div">
+              <h4>Important Stemmed Words that Led to Your Results</h4>
+              {features.map((f, i) => (
+                <p key={i} className="items">
+                  {f}
+                </p>
+              ))}
+            </div>
+            <div id="results">
+              {shows.map((m, i) => (
+                <ShowResult key={i} movie={m} />
+              ))}
+            </div>
           </div>
         ) : null}
       </div>
 
-      <div>
-        {suggestions.length > 0 && !loading ? (
+      {suggestions.length > 0 && !loading ? (
+        <div>
+          <hr className="suggestions-divider" />
+          <div className="suggestions-title">
+            <h2>Movie Suggestions for Similar Clubs</h2>
+          </div>
+          <div className="neighbors-div">
+            <h4>Similar Clubs</h4>
+            {neighbors.map((m, i) => (
+              <p key={i} className="items">
+                {m}
+              </p>
+            ))}
+          </div>
           <div id="suggestions">
-            <div className="suggestions-title">
-              <h2>Suggestions for Similar Clubs</h2>
-            </div>
             {suggestions.map((m, i) => (
               <ShowSuggestions key={i} movie={m} />
             ))}
           </div>
-        ) : null}
-      </div>
+        </div>
+      ) : null}
     </section>
   );
 };

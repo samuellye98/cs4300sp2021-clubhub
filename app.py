@@ -3,6 +3,7 @@ from gevent import monkey
 monkey.patch_all()
 
 from sklearn.metrics.pairwise import cosine_similarity
+from sklearn.feature_extraction.text import TfidfVectorizer
 import numpy as np
 from collections import defaultdict, Counter
 import pickle
@@ -78,11 +79,11 @@ def getShows():
     query = ' '.join([club_to_desc[c['name']]*(int(c['weight'])//gcd) for c in clubs])
     if freeText:
         query += ' ' + freeText
-    neighbor_query = getNeighborQuery(clubs, query)
+    neighbors, neighbor_query = getNeighborQuery(clubs, query)
 
     # Run cosine similarity to get results and suggestions
-    res = gen_cosine_sim(query, 10, genreSet)
-    all_suggestions = gen_cosine_sim(neighbor_query, 15)
+    res, features= gen_cosine_sim(query, 10, genreSet)
+    all_suggestions, _= gen_cosine_sim(neighbor_query, 15)
     
     resSet = set([r['id'] for r in res])
     cut_suggestions = []
@@ -93,7 +94,10 @@ def getShows():
             break
 
     return json.dumps({
-        "results": res, "suggestions": cut_suggestions
+        "results": res, 
+        "suggestions": cut_suggestions, 
+        "key_features": features, 
+        "neighbors": neighbors
         })
 
 
@@ -106,6 +110,8 @@ def gen_cosine_sim(query, max_count, genreSet=[], tfidf_vectorizer=tfidf_vec_mov
     return: cosine similarity between query and all docs
     """
     query_tfidf = tfidf_vectorizer.transform([query])
+    features_set = set(tfidf_vectorizer.get_feature_names())
+    features = list(features_set.intersection(set(query.split(' '))))[:10]
     cosineSimilarities = cosine_similarity(query_tfidf, tfidf_mat).flatten()
     sortedShows = np.argsort(-1*cosineSimilarities)
 
@@ -148,7 +154,7 @@ def gen_cosine_sim(query, max_count, genreSet=[], tfidf_vectorizer=tfidf_vec_mov
             break
                 
     showRes = sorted(showRes, key=lambda x: (9*x['cosine_similarity'] + 0.1*x['rating']), reverse=True)
-    return showRes
+    return showRes, features
 
 
 def getNeighborQuery(clubs, query):
@@ -165,8 +171,9 @@ def getNeighborQuery(clubs, query):
         if neighbor not in query_clubs:
             neighbor_lst += [neighbor]
 
+    neighbor_lst = neighbor_lst[:5]
     neighbor_query = ' '.join([club_to_desc[n] for n in neighbor_lst])
-    return neighbor_query
+    return neighbor_lst, neighbor_query
 
 
 if __name__ == "__main__":

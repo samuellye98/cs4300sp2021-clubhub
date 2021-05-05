@@ -7,6 +7,9 @@
 }
 
 .prototype {
+  display: flex;
+  justify-content: space-evenly;
+  width: 300px;
   position: absolute;
   text-decoration: none;
   top: 0;
@@ -44,14 +47,6 @@
   flex-direction: column;
   align-items: center;
 }
-
-/* .search-title {
-  font-family: 'Poppins', sans-serif;
-  font-weight: 800;
-  color: white;
-  font-size: 36px;
-  margin-bottom: 60px;
-} */
 
 /** Movie Results */
 
@@ -143,6 +138,20 @@
   font-size: 14px;
 }
 
+#stemmed-words-div {
+  width: 80%;
+  margin: 4% auto 2%;
+  text-align: center;
+}
+
+.suggestions-divider {
+  border: none;
+  width: 75%;
+  background-color: black;
+  height: 5px;
+  margin-top: 5%;
+}
+
 #suggestions {
   display: flex;
   flex-direction: column;
@@ -156,9 +165,9 @@
   background-color: #d25502;
   border-radius: 50px;
   color: white;
-  margin: 2% auto 3%;
+  margin: 4% auto 3%;
   text-align: center;
-  width: 100%;
+  width: 60%;
 }
 
 .suggestions-title h2 {
@@ -166,4 +175,19 @@
   font-weight: normal;
   padding: 0.2% 2%;
   margin: 0;
+}
+
+.neighbors-div {
+  margin: 0 auto 2%;
+  width: 50%;
+  text-align: center;
+}
+
+.items {
+  border: solid rgba(0, 0, 0, 0.85) 2px;
+  color: rgba(0, 0, 0, 0.85);
+  border-radius: 25px;
+  display: inline-block;
+  margin: 5px 5px;
+  padding: 5px 10px;
 }
