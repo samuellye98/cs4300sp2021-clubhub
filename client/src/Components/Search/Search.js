@@ -93,7 +93,10 @@ const Search = () => {
   return (
     <section id="search">
       <div className="prototype">
-        <a target="_blank" href="https://test-clubhub-4300.herokuapp.com/">
+        <a target="_blank" href="https://clubhub-4300.herokuapp.com/">
+          Final prototype
+        </a>
+        <a target="_blank" href="https://clubhub-4300-fst.herokuapp.com/">
           First prototype
         </a>
       </div>
