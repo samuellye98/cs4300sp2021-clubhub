@@ -79,7 +79,7 @@ def getShows():
     query = ' '.join([club_to_desc[c['name']]*(int(c['weight'])//gcd) for c in clubs])
     if freeText:
         query += ' ' + freeText
-    neighbor_query = getNeighborQuery(clubs, query)
+    neighbors, neighbor_query = getNeighborQuery(clubs, query)
 
     # Run cosine similarity to get results and suggestions
     res, features= gen_cosine_sim(query, 10, genreSet)
@@ -94,7 +94,10 @@ def getShows():
             break
 
     return json.dumps({
-        "results": res, "suggestions": cut_suggestions, "key_features": features
+        "results": res, 
+        "suggestions": cut_suggestions, 
+        "key_features": features, 
+        "neighbors": neighbors
         })
 
 
@@ -107,7 +110,7 @@ def gen_cosine_sim(query, max_count, genreSet=[], tfidf_vectorizer=tfidf_vec_mov
     return: cosine similarity between query and all docs
     """
     query_tfidf = tfidf_vectorizer.transform([query])
-    features = query_tfidf.get_feature_names()
+    features = tfidf_vectorizer.get_feature_names()
     cosineSimilarities = cosine_similarity(query_tfidf, tfidf_mat).flatten()
     sortedShows = np.argsort(-1*cosineSimilarities)
 
@@ -168,7 +171,7 @@ def getNeighborQuery(clubs, query):
             neighbor_lst += [neighbor]
 
     neighbor_query = ' '.join([club_to_desc[n] for n in neighbor_lst])
-    return neighbor_query
+    return neighbor_lst, neighbor_query
 
 
 if __name__ == "__main__":

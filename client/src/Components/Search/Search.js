@@ -22,6 +22,7 @@ const Search = () => {
   const [tags, setTags] = useState([]);
   const [shows, setShows] = useState([]);
   const [suggestions, setSuggestions] = useState([]);
+  const [neighbors, setNeighbors] = useState([]);
   const [loading, setLoading] = useState(false);
 
   // Advanced search
@@ -76,6 +77,7 @@ const Search = () => {
       .then((res) => {
         setShows(res.data.results);
         setSuggestions(res.data.suggestions);
+        setNeighbors(res.data.neighbors);
         setLoading(false);
       })
       .catch((e) => setLoading(false));
@@ -158,6 +160,10 @@ const Search = () => {
           <div id="suggestions">
             <div className="suggestions-title">
               <h2>Movie Suggestions for Similar Clubs</h2>
+              <h4>Similar Clubs</h4>
+              {neighbors.map((m, _) => (
+                <p> {m} </p>
+              ))}
             </div>
             {suggestions.map((m, i) => (
               <ShowSuggestions key={i} movie={m} />
