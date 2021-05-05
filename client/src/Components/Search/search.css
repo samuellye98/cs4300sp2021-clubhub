@@ -48,14 +48,6 @@
   align-items: center;
 }
 
-/* .search-title {
-  font-family: 'Poppins', sans-serif;
-  font-weight: 800;
-  color: white;
-  font-size: 36px;
-  margin-bottom: 60px;
-} */
-
 /** Movie Results */
 
 #results {
@@ -147,6 +139,7 @@
 }
 
 #stemmed-words-div {
+  width: 80%;
   margin: 4% auto 2%;
   text-align: center;
 }
@@ -184,17 +177,17 @@
   margin: 0;
 }
 
-.neighbors-div { 
-  margin: 0 auto 2%; 
+.neighbors-div {
+  margin: 0 auto 2%;
   width: 50%;
   text-align: center;
 }
 
-.items  {
+.items {
   border: solid rgba(0, 0, 0, 0.85) 2px;
   color: rgba(0, 0, 0, 0.85);
   border-radius: 25px;
   display: inline-block;
-  margin: 5px 2px;
-  padding: 1px 4px;
+  margin: 5px 5px;
+  padding: 5px 10px;
 }

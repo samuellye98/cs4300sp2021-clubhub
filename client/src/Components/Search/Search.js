@@ -158,8 +158,10 @@ const Search = () => {
             </div>
             <div id="stemmed-words-div">
               <h4>Important Stemmed Words that Led to Your Results</h4>
-              {features.map(f => (
-                <p className="items"> {f} </p>
+              {features.map((f, i) => (
+                <p key={i} className="items">
+                  {f}
+                </p>
               ))}
             </div>
             <div id="results">
@@ -171,28 +173,27 @@ const Search = () => {
         ) : null}
       </div>
 
-      <hr className="suggestions-divider" />
-
-      <div>
-        {suggestions.length > 0 && !loading ? (
-          <div>
-            <div className="suggestions-title">
-              <h2>Movie Suggestions for Similar Clubs</h2>
-            </div>
-            <div className="neighbors-div">
-              <h4>Similar Clubs</h4>
-              {neighbors.map(m => (
-                <p className="items">{m}</p>
-              ))}
-            </div>
-            <div id="suggestions">
-              {suggestions.map((m, i) => (
-                <ShowSuggestions key={i} movie={m} />
-              ))}
-            </div>
+      {suggestions.length > 0 && !loading ? (
+        <div>
+          <hr className="suggestions-divider" />
+          <div className="suggestions-title">
+            <h2>Movie Suggestions for Similar Clubs</h2>
           </div>
-        ) : null}
-      </div>
+          <div className="neighbors-div">
+            <h4>Similar Clubs</h4>
+            {neighbors.map((m, i) => (
+              <p key={i} className="items">
+                {m}
+              </p>
+            ))}
+          </div>
+          <div id="suggestions">
+            {suggestions.map((m, i) => (
+              <ShowSuggestions key={i} movie={m} />
+            ))}
+          </div>
+        </div>
+      ) : null}
     </section>
   );
 };
