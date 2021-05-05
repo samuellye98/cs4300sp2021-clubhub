@@ -23,6 +23,7 @@ const Search = () => {
   const [shows, setShows] = useState([]);
   const [suggestions, setSuggestions] = useState([]);
   const [neighbors, setNeighbors] = useState([]);
+  const [features, setFeatures] = useState([]);
   const [loading, setLoading] = useState(false);
 
   // Advanced search
@@ -78,6 +79,7 @@ const Search = () => {
         setShows(res.data.results);
         setSuggestions(res.data.suggestions);
         setNeighbors(res.data.neighbors);
+        setFeatures(res.data.key_features);
         setLoading(false);
       })
       .catch((e) => setLoading(false));
@@ -148,6 +150,10 @@ const Search = () => {
       <div ref={resultsRef}>
         {shows.length > 0 && !loading ? (
           <div id="results">
+            <h4>Important Stemmed Words that Led to Your Result</h4>
+            {features.map(f => (
+              <p> {f} </p>
+            ))}
             {shows.map((m, i) => (
               <ShowResult key={i} movie={m} />
             ))}
@@ -160,9 +166,11 @@ const Search = () => {
           <div id="suggestions">
             <div className="suggestions-title">
               <h2>Movie Suggestions for Similar Clubs</h2>
+            </div>
+            <div>
               <h4>Similar Clubs</h4>
-              {neighbors.map((m, _) => (
-                <p> {m} </p>
+              {neighbors.map(m => (
+                <p className="neighbors">{m}</p>
               ))}
             </div>
             {suggestions.map((m, i) => (

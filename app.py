@@ -83,7 +83,7 @@ def getShows():
 
     # Run cosine similarity to get results and suggestions
     res, features= gen_cosine_sim(query, 10, genreSet)
-    all_suggestions, features= gen_cosine_sim(neighbor_query, 15)
+    all_suggestions, _= gen_cosine_sim(neighbor_query, 15)
     
     resSet = set([r['id'] for r in res])
     cut_suggestions = []
@@ -110,7 +110,9 @@ def gen_cosine_sim(query, max_count, genreSet=[], tfidf_vectorizer=tfidf_vec_mov
     return: cosine similarity between query and all docs
     """
     query_tfidf = tfidf_vectorizer.transform([query])
-    features = tfidf_vectorizer.get_feature_names()
+    features_set = set(tfidf_vectorizer.get_feature_names())
+    print(set(query.split(' ')))
+    features = list(features_set.intersection(set(query.split(' '))))[:10]
     cosineSimilarities = cosine_similarity(query_tfidf, tfidf_mat).flatten()
     sortedShows = np.argsort(-1*cosineSimilarities)
 
