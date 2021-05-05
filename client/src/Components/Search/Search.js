@@ -118,7 +118,7 @@ const Search = () => {
                     className="free-form-input"
                     type="text"
                     name="freeforminput"
-                    placeholder="Free form input"
+                    placeholder="Free form input (Enter additional search keywords or sentences here"
                   ></input>
                 </div>
 
@@ -157,7 +157,7 @@ const Search = () => {
         {suggestions.length > 0 && !loading ? (
           <div id="suggestions">
             <div className="suggestions-title">
-              <h2>Suggestions for Similar Clubs</h2>
+              <h2>Movie Suggestions for Similar Clubs</h2>
             </div>
             {suggestions.map((m, i) => (
               <ShowSuggestions key={i} movie={m} />
